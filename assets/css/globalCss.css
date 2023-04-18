@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --primary-color: #212121;
+    --bg-btn-primary: #272727;
+    --bg-hover-primary: #323232;
+    --bg-hover-second: #383838;
+    --bg-focus-primary: #565656;
+    --bg-input-primary: #333;
+    --hover-color: #e85f54;
+    --bg-language-menu: #444444;
+    --bg-hover-third: #727272;
+}
+
+body{
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
