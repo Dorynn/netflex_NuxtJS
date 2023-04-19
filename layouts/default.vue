@@ -1,76 +1,89 @@
 <template>
-  <div class="headerDefault">
-    <b-navbar toggleable="lg" type="dark">
-      <nuxt-link to="/" class="home-btn">Home</nuxt-link>
-
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-form class="search">
-            <input
-              type="text"
-              class="search-input"
-              :class="{ changeWidth: isClickSearch }"
-              placeholder="Please enter value..."
-            />
-            <div class="search-btn" @click="onSearch()">
-              <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-            </div>
-          </b-nav-form>
-
-          <div class="languageOption" @click="onLanguageMenu()">
-            <img
-              src="../assets/images/FlagEN.jpg"
-              alt="Flag of England"
-              class="flagImage"
-            />
-            <font-awesome-icon
-              :icon="['fas', 'chevron-down']"
-              class="arrowDownIcon"
-            />
-            <div class="menuLanguage" v-show="isShowLanguageMenu">
-              <div class="wrapperMenuItem">
-                <div class="menuItem">
-                  <img
-                    src="../assets/images/vietnam-flag.png"
-                    alt="Flag of England"
-                    class="flagImage"
-                  />
-                  <span>VIE</span>
-                </div >
-                <div class="menuItem">
-                  <img
-                    src="../assets/images/FlagEN.jpg"
-                    alt="Flag of England"
-                    class="flagImage"
-                  />
-                  <span>ENG</span>
+  <div>
+    <div class="headerDefault">
+      <b-navbar toggleable="lg" type="dark">
+        <nuxt-link to="/" class="home-btn">Home</nuxt-link>
+  
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+  
+        <b-collapse id="nav-collapse" is-nav>
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+            <b-nav-form class="search">
+              <input
+                type="text"
+                class="search-input"
+                :class="{ changeWidth: isClickSearch }"
+                placeholder="Please enter value..."
+              />
+              <div class="search-btn" @click="onSearch()">
+                <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+              </div>
+            </b-nav-form>
+  
+            <div class="languageOption" @click="onLanguageMenu()">
+              <img
+                src="../assets/images/FlagEN.jpg"
+                alt="Flag of England"
+                class="flagImage"
+              />
+              <font-awesome-icon
+                :icon="['fas', 'chevron-down']"
+                class="arrowDownIcon"
+              />
+              <div class="menuLanguage" v-show="isShowLanguageMenu">
+                <div class="wrapperMenuItem">
+                  <div class="menuItem">
+                    <img
+                      src="../assets/images/vietnam-flag.png"
+                      alt="Flag of England"
+                      class="flagImage"
+                    />
+                    <span>VIE</span>
+                  </div >
+                  <div class="menuItem">
+                    <img
+                      src="../assets/images/FlagEN.jpg"
+                      alt="Flag of England"
+                      class="flagImage"
+                    />
+                    <span>ENG</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="userAccount" @click="onUserMenu">
-            <img src="../assets/images/user.jpg" alt="" />
-
-            <div class="menuLanguage" v-show="isShowUserMenu">
-              <div class="wrapperMenuItem">
-                <div class="menuItem">
-                  <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
-                <span>Login</span>
-                </div >
-                <div class="menuItem">
-                  <font-awesome-icon :icon="['fas', 'user-plus']" />
-                <span>Sign up</span>
+  
+            <div class="userAccount" @click="onUserMenu">
+              <img src="../assets/images/user.jpg" alt="" />
+  
+              <div class="menuLanguage" v-show="isShowUserMenu">
+                <div class="wrapperMenuItem">
+                  <div class="menuItem">
+                    <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
+                  <span>Login</span>
+                  </div >
+                  <div class="menuItem">
+                    <font-awesome-icon :icon="['fas', 'user-plus']" />
+                  <span>Sign up</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+    </div>
+    <nuxt/>
+    <div class="footerDefault">
+      <div class="socialLinkList">
+        <font-awesome-icon :icon="['fab', 'facebook']" />
+        <font-awesome-icon :icon="['fab', 'twitter']" />
+        <font-awesome-icon :icon="['fab', 'linkedin']" />
+        <font-awesome-icon :icon="['fab', 'instagram']" />
+      </div>
+      <hr style="background-color: #333333"/>
+      <p class="m-0 pb-3">2023 - <strong>Vuetify</strong></p>
+    </div>
   </div>
 </template>
 
@@ -101,19 +114,17 @@ export default {
     }
   },
 };
-</script>
+</script >
 
-<style lang="scss" scroped>
-// @keyframes changeInputWidth{
-//   0%{}
-//   50%{}
-//   100%{}
-// }
+<style lang="scss" scoped>
 .headerDefault {
   position: fixed;
+  padding: 0 16px;
+  top: 0;
   width: 100vw;
   display: flex;
   align-items: center;
+  z-index: 1000;
   color: #fff;
   height: 60px;
   background-color: var(--primary-color);
@@ -128,6 +139,7 @@ export default {
     .home-btn {
       color: #fff;
       text-decoration: none;
+      transition: 0.5s;
       &:hover {
         color: var(--hover-color);
       }
@@ -233,6 +245,15 @@ export default {
         }
       }
     }
+  }
+}
+
+.footerDefault{
+  text-align: center;
+  background-color: var(--bg-footer);
+  .socialLinkList{
+    font-size: 24px;
+    padding: 16px;
   }
 }
 </style>

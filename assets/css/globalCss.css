@@ -14,10 +14,16 @@
     --hover-color: #e85f54;
     --bg-language-menu: #444444;
     --bg-hover-third: #727272;
+    --button-success: #4caf50;
+    --hover-button-success:#5ab55e;
+    --button-danger: #f44336;
+    --hover-button-danger: #f55246;
+    --bg-footer: #363636;
 }
 
 body{
     background-color: var(--primary-color);
     color: #fff;
+    font-family: sans-serif;
 }
 
