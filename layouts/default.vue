@@ -3,9 +3,10 @@
     <div class="headerDefault">
       <b-navbar toggleable="lg" type="dark">
         <nuxt-link to="/" class="home-btn">Home</nuxt-link>
-  
+        <nuxt-link to="/film" class="home-btn">Film</nuxt-link>
+
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-  
+
         <b-collapse id="nav-collapse" is-nav>
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
@@ -20,7 +21,7 @@
                 <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
               </div>
             </b-nav-form>
-  
+
             <div class="languageOption" @click="onLanguageMenu()">
               <img
                 src="../assets/images/FlagEN.jpg"
@@ -40,7 +41,7 @@
                       class="flagImage"
                     />
                     <span>VIE</span>
-                  </div >
+                  </div>
                   <div class="menuItem">
                     <img
                       src="../assets/images/FlagEN.jpg"
@@ -52,28 +53,30 @@
                 </div>
               </div>
             </div>
-  
+
             <div class="userAccount" @click="onUserMenu">
               <img src="../assets/images/user.jpg" alt="" />
-  
+
               <div class="menuLanguage" v-show="isShowUserMenu">
                 <div class="wrapperMenuItem">
-                  <div class="menuItem">
+                  <div class="menuItem" v-b-modal.modal-login>
                     <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
-                  <span>Login</span>
-                  </div >
-                  <div class="menuItem">
+                    <span v-b-modal.modal-login>Login</span>
+                  </div>
+                  <div class="menuItem" v-b-modal.modal-sign-up>
                     <font-awesome-icon :icon="['fas', 'user-plus']" />
-                  <span>Sign up</span>
+                    <span>Sign up</span>
                   </div>
                 </div>
               </div>
             </div>
+            <LoginModal/>
+            <SignUpModal/>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
     </div>
-    <nuxt/>
+    <nuxt />
     <div class="footerDefault">
       <div class="socialLinkList">
         <font-awesome-icon :icon="['fab', 'facebook']" />
@@ -81,19 +84,25 @@
         <font-awesome-icon :icon="['fab', 'linkedin']" />
         <font-awesome-icon :icon="['fab', 'instagram']" />
       </div>
-      <hr style="background-color: #333333"/>
+      <hr style="background-color: #333333" />
       <p class="m-0 pb-3">2023 - <strong>Vuetify</strong></p>
     </div>
   </div>
 </template>
 
 <script>
+import LoginModal from "../components/common/Modal/LoginModal";
+import SignUpModal from "../components/common/Modal/SignUpModal"
 export default {
+  components:{
+    LoginModal, 
+    SignUpModal
+  },
   data() {
     return {
       isClickSearch: false,
       isShowLanguageMenu: false,
-      isShowUserMenu: false
+      isShowUserMenu: false,
     };
   },
   watch: {
@@ -106,15 +115,15 @@ export default {
       console.log("clickk");
       this.isClickSearch = !this.isClickSearch;
     },
-    onLanguageMenu(){
-      this.isShowLanguageMenu = !this.isShowLanguageMenu
+    onLanguageMenu() {
+      this.isShowLanguageMenu = !this.isShowLanguageMenu;
     },
-    onUserMenu(){
-      this.isShowUserMenu = !this.isShowUserMenu
-    }
+    onUserMenu() {
+      this.isShowUserMenu = !this.isShowUserMenu;
+    },
   },
 };
-</script >
+</script>
 
 <style lang="scss" scoped>
 .headerDefault {
@@ -200,7 +209,7 @@ export default {
         font-size: 10px;
       }
     }
-    .menuLanguage{
+    .menuLanguage {
       height: 148px;
       position: absolute;
       top: 10px;
@@ -209,16 +218,16 @@ export default {
       background-color: transparent;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       overflow: hidden;
-      .wrapperMenuItem{
+      .wrapperMenuItem {
         margin-top: 52px;
       }
-      .menuItem{
+      .menuItem {
         line-height: 50px;
         height: 48px;
         width: 160px;
         padding: 0px 16px;
         background-color: var(--bg-language-menu);
-        &:hover{
+        &:hover {
           background-color: var(--bg-hover-third);
         }
       }
@@ -248,10 +257,10 @@ export default {
   }
 }
 
-.footerDefault{
+.footerDefault {
   text-align: center;
   background-color: var(--bg-footer);
-  .socialLinkList{
+  .socialLinkList {
     font-size: 24px;
     padding: 16px;
   }

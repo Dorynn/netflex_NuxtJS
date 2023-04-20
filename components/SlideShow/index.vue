@@ -1,17 +1,19 @@
 <template>
   <div class="slideShow" 
-       @mouseover="showControlSliderIcons()"
-       @mouseleave="hideControlSliderIcons()"
   >
+  <!-- @mouseover="showControlSliderIcons()"
+  @mouseleave="hideControlSliderIcons()" -->
     <b-carousel
       id="carousel-1"
       v-model="slide"
       :interval="0"
-      :controls="isShowControlSliderIcon"
+      controls
       background="#ababab"
       img-width="1024"
       img-height="700"
       style="text-shadow: 1px 1px 2px #333"
+      v-b-hover="showControlSliderIcons"
+      
       >
       <b-carousel-slide v-for="item in films" :key="item.id">
         <template #img>
@@ -24,7 +26,7 @@
           />
         </template>
         <div class="contentSlider text-left">
-          <h1 class="font-weight-bold" style="font-size: 48px;">{{ item.title }}</h1>
+          <h1 class="font-weight-bold" style="font-size: 48px;" ref="filmSlider">{{ item.title }}</h1>
           <p class="mb-4">{{ item.brief }}</p>
           <ButtonSucess/>
           <ButtonDanger/>
@@ -45,42 +47,44 @@ export default {
   data() {
     return {
       slide: 0,
-      // sliding: null,
-      isShowControlSliderIcon: false,
     };
   },
   watch:{
-    isShowControlSliderIcon(){
-      console.log(this.isShowControlSliderIcon)
-    }
   },
   computed:{
     ...mapGetters(['films'])
   },
   methods: {
-    showControlSliderIcons(){
-      console.log('whatt...')
-      this.isShowControlSliderIcon = true;
+    showControlSliderIcons(isHovered){
+      const nextIcon=document.querySelector('.carousel-control-next')
+      const prevIcon=document.querySelector('.carousel-control-prev')
+      console.log('whatt...', nextIcon)
+      if(isHovered){
+        nextIcon.style.right = '15px'
+        prevIcon.style.left = '15px'
+      }else{
+        nextIcon.style.right = '-40px'
+        prevIcon.style.left = '-40px'
+
+      }
     },
-    hideControlSliderIcons(){
-      this.isShowControlSliderIcon = false;
-    }
   },
 
   created(){
-    console.log('created', this.isShowControlSliderIcon)
+    console.log('created')
   },
   beforeMount(){
     console.log('mount')
   },
   mounted(){
-    console.log('mounted')
+    console.log('mounted', this.$refs.filmSlider)
+
   },
   beforeUpdate(){
-    console.log('before update', this.isShowControlSliderIcon)
+    console.log('before update')
   },
   updated(){
-    console.log('updated', this.isShowControlSliderIcon)
+    console.log('updated')
   },
   beforeDestroy(){
     console.log('before destroy')
@@ -92,23 +96,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @keyframes control-next-icon-in {
-    0%{ right: -10px;}
-    100%{right: 15px;}
-  }
-  @keyframes control-next-icon-out {
-    0%{ right: 15px;}
-    100%{right: -10px;}
-  }
-  @keyframes control-prev-icon-in {
-    0%{ left: -10px;}
-    100%{left: 15px;}
-  }
-  @keyframes control-prev-icon-out {
-    100%{left: 15px;}
-    0%{ left: -10px;}
-  }
   .slideShow{
+    overflow: hidden;
     .carousel-caption{
       top: 50%;
       transform: translateY(-50%);
@@ -128,18 +117,16 @@ export default {
       top: 50%;
       transform: translateY(-50%);
       border-radius: 100px;
-      transition: 0.5s;
+      transition: 0.1s;
       &:hover{
         background-color: #3d3c3c98; ;
       }
     }
     .carousel-control-next{
-      animation: control-next-icon-in 0.1s;
-      right: 15px;
+      right: -40px;
     }
     .carousel-control-prev{
-      left: 15px;
-      animation: control-prev-icon-in 0.1s;
+      left: -40px;
     }
   }
 </style>

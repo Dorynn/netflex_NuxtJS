@@ -8,7 +8,10 @@
     --primary-color: #212121;
     --bg-btn-primary: #272727;
     --bg-hover-primary: #323232;
+    --bg-hover-close: #302120;
+    --bg-hover-login:#222a22;
     --bg-hover-second: #383838;
+    --hover-button-danger: #f55246;
     --bg-focus-primary: #565656;
     --bg-input-primary: #333;
     --hover-color: #e85f54;
@@ -17,13 +20,29 @@
     --button-success: #4caf50;
     --hover-button-success:#5ab55e;
     --button-danger: #f44336;
-    --hover-button-danger: #f55246;
     --bg-footer: #363636;
+    --button-circle: #e85f54;
+    --star-primary: #ffd700;
+    --star-second:#ffc107;
+    --pagination-button:#1e1e1e;
+    --pagination-button-active: #333333;
+    --modal-header: #ffb74d;
+    --modal-body: #1e1e1e;
+    --modal-footer: #1e1e1e;
+
 }
 
 body{
     background-color: var(--primary-color);
     color: #fff;
     font-family: sans-serif;
+}
+
+.text-orange{
+    color: #c94439;
+}
+
+.text-green{
+    color: #4caf50;
 }
 

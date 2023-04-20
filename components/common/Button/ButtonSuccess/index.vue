@@ -19,6 +19,7 @@ export default {
     padding: 6px 16px;
     border-radius: 4px;
     background-color: var(--button-success);
+    transition: 0.5s;
     &:hover{
       background-color: var(--hover-button-success);
     }

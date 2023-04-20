@@ -18,6 +18,7 @@ export default {};
         color: #fff;
         padding: 6px 16px;
         border-radius: 4px;
+        transition: 0.5s;
         &:hover{
             background-color: var(--hover-button-danger);
         }
