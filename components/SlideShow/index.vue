@@ -1,16 +1,12 @@
 <template>
   <div class="slideShow" 
   >
-  <!-- @mouseover="showControlSliderIcons()"
-  @mouseleave="hideControlSliderIcons()" -->
     <b-carousel
       id="carousel-1"
       v-model="slide"
       :interval="0"
       controls
       background="#ababab"
-      img-width="1024"
-      img-height="700"
       style="text-shadow: 1px 1px 2px #333"
       v-b-hover="showControlSliderIcons"
       
@@ -21,13 +17,14 @@
             class="d-block w-100"
             width="1024"
             height="700"
-            :src="item.url"
+            fluid
+            :src="`https://image.tmdb.org/t/p/original${item.backdrop_path}`"
             alt="image slot"
           />
         </template>
         <div class="contentSlider text-left">
           <h1 class="font-weight-bold" style="font-size: 48px;" ref="filmSlider">{{ item.title }}</h1>
-          <p class="mb-4">{{ item.brief }}</p>
+          <p class="mb-4">{{ item.overview }}</p>
           <ButtonSucess/>
           <ButtonDanger/>
         </div>

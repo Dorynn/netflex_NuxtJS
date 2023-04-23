@@ -1,6 +1,6 @@
 <template>
   <div id="filmIntrodutionPage">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col-3" style="width: 420px; height: 630px">
           <img
@@ -45,32 +45,12 @@
           <ButtonDanger />
         </div>
         <div class="col-3">
-          <!-- <h3>Recommended</h3>
-          <div class="film" style="height: 50px; display: flex">
-            <img
-              src="../../assets/images/spririted-away-poster.jpg"
-              alt=""
-              height="100%"
-            />
-            <div class="ml-3">
-              <small class="m-0 font-weight-bold">Spirited Away</small>
-              <br />
-              <b-form-rating
-                id="rating-inline"
-                inline
-                value="8.5"
-                stars="10"
-                readonly
-              ></b-form-rating>
-            </div>
-          </div> -->
           <RecommendedList/>
-
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
       <h1>Main Actor</h1>
       <hr />
       <div class="row actorList">
@@ -135,9 +115,6 @@ export default {
 #filmIntrodutionPage {
   margin-top: 80px;
 
-  .container-fluid {
-    width: 90%;
-  }
   .badge {
     width: 80px;
     height: 24px;

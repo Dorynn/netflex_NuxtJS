@@ -1,19 +1,19 @@
 <template>
-  <div class="filmList mt-5">
-    <h1 style="font-size: 60px; font-weight: 600; margin: 0 16px;">{{ filmtype }}</h1>
-    <hr style="background-color: #333333; margin: 0 16px;"/>
-    <div class="wapper">
-        <div class="card-image col-3" v-for="film in films" :key="film.id">
+  <div class="container mt-5">
+    <h1 style="font-size: 60px; font-weight: 600; ">{{ filmtype }}</h1>
+    <hr style="background-color: #333333;"/>
+    <b-row align-h="end" class="wapper">
+        <b-col class="card-image" cols="6" sm="6" md="3" lg="3" xl="3" v-for="film in films" :key="film.id">
             <div
                 @mouseover="showButtonCircle(film.id)"
                 @mouseleave="hideButtonCircle()"
             >
-                <img :src="film.url" alt="">
+                <img :src="`https://image.tmdb.org/t/p/w500${film.backdrop_path}`" alt="">
                 <ButtonCircle v-show = "isShowCircleButton && currentId===film.id"/>
             </div>
-            <p class="my-3 font-weight-bold text-center filmTitle">Spirited Away</p>
-        </div>
-    </div>
+            <p class="my-3 font-weight-bold text-center filmTitle">{{ film.title }}</p>
+        </b-col>
+    </b-row>
     <b-pagination
         v-model="currentPage"
         :total-rows="rows"
@@ -66,17 +66,17 @@ export default {
 </script>
 
 <style lang="scss" >
-.filmList{
-    padding: 12px;
-    width: 94%;
-    margin: auto;
+.container{
+    // padding: 12px;
+    // width: 94%;
+    // margin: auto;
     .wapper{
         display: flex;
         flex-wrap: wrap;
         margin-top: 40px;
         .card-image{
-            width: 24%;
-            height: fit-content;
+            // width: 100%;
+            // height: fit-content;
             position: relative;
             .buttonCircle{
                 position: absolute;
@@ -86,7 +86,7 @@ export default {
             }
             img{
                 width: 100%;
-                height: 250px;
+                // height: 250px;
                 border-radius: 15px;
             }
             .filmTitle{

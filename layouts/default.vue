@@ -4,11 +4,11 @@
       <b-navbar toggleable="lg" type="dark">
         <nuxt-link to="/" class="home-btn">Home</nuxt-link>
         <nuxt-link to="/film" class="home-btn">Film</nuxt-link>
+        <nuxt-link to="/test" class="home-btn">test</nuxt-link>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
-          <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
             <b-nav-form class="search">
               <input
@@ -17,61 +17,84 @@
                 :class="{ changeWidth: isClickSearch }"
                 placeholder="Please enter value..."
               />
-              <div class="search-btn" @click="onSearch()">
-                <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-              </div>
+              <v-btn icon dark class="search-btn" @click="onSearch()">
+                <font-awesome-icon
+                  :icon="['fas', 'magnifying-glass']"
+                  size="lg"
+                />
+                <!-- <v-icon dark> mdi-plus </v-icon> -->
+              </v-btn>
             </b-nav-form>
 
-            <div class="languageOption" @click="onLanguageMenu()">
+            <v-btn
+              dark
+              class="languageOption"
+              @click="onLanguageMenu()"
+              v-click-outside="onClickOutSideLang"
+            >
               <img
                 src="../assets/images/FlagEN.jpg"
                 alt="Flag of England"
                 class="flagImage"
               />
-              <font-awesome-icon
-                :icon="['fas', 'chevron-down']"
-                class="arrowDownIcon"
-              />
-              <div class="menuLanguage" v-show="isShowLanguageMenu">
-                <div class="wrapperMenuItem">
-                  <div class="menuItem">
+              <font-awesome-icon :icon="['fas', 'chevron-down']" size="xs" />
+            </v-btn>
+
+            <v-card
+              class="mx-auto mt-5 menuLanguage"
+              min-width="160px"
+              v-show="isShowLanguageMenu"
+            >
+              <v-list class="p-0" style="margin-top: 50px">
+                <v-list-item-group>
+                  <v-list-item class="menuItem">
                     <img
-                      src="../assets/images/vietnam-flag.png"
+                      src="~/assets/images/FlagEN.jpg"
                       alt="Flag of England"
                       class="flagImage"
                     />
-                    <span>VIE</span>
-                  </div>
-                  <div class="menuItem">
+                    <v-list-item-content>ENG</v-list-item-content>
+                  </v-list-item>
+                  <v-list-item class="menuItem">
                     <img
-                      src="../assets/images/FlagEN.jpg"
+                      src="~/assets/images/vietnam-flag.png"
                       alt="Flag of England"
                       class="flagImage"
                     />
-                    <span>ENG</span>
-                  </div>
-                </div>
-              </div>
+                    <v-list-item-content>VIE</v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-card>
+
+            <div class="userAccount" @click="onUserMenu" v-click-outside="onClickOutSideUser">
+              <v-avatar size="28px">
+              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+            </v-avatar>
             </div>
 
-            <div class="userAccount" @click="onUserMenu">
-              <img src="../assets/images/user.jpg" alt="" />
+            <v-card
+              class="mx-auto mt-5 menuLanguage"
+              min-width="130px"
+              v-show="isShowUserMenu"
+            >
+              <v-list class="p-0" style="margin-top: 50px;">
+                <v-list-item-group>
+                  <v-list-item class="menuItem">
+                    <font-awesome-icon :icon="['fas', 'right-to-bracket']" class="mr-3"/>
+                    <v-list-item-content v-b-modal.modal-login>Login</v-list-item-content>
+                  </v-list-item>
+                  <v-list-item class="menuItem" v-b-modal.modal-sign-up>
+                    <font-awesome-icon :icon="['fas', 'user-plus']" class="mr-3"/>
+                    <v-list-item-content>Sign Up</v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-card>
 
-              <div class="menuLanguage" v-show="isShowUserMenu">
-                <div class="wrapperMenuItem">
-                  <div class="menuItem" v-b-modal.modal-login>
-                    <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
-                    <span v-b-modal.modal-login>Login</span>
-                  </div>
-                  <div class="menuItem" v-b-modal.modal-sign-up>
-                    <font-awesome-icon :icon="['fas', 'user-plus']" />
-                    <span>Sign up</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <LoginModal/>
-            <SignUpModal/>
+
+            <LoginModal />
+            <SignUpModal />
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -92,11 +115,11 @@
 
 <script>
 import LoginModal from "../components/common/Modal/LoginModal";
-import SignUpModal from "../components/common/Modal/SignUpModal"
+import SignUpModal from "../components/common/Modal/SignUpModal";
 export default {
-  components:{
-    LoginModal, 
-    SignUpModal
+  components: {
+    LoginModal,
+    SignUpModal,
   },
   data() {
     return {
@@ -109,6 +132,9 @@ export default {
     isClickSearch() {
       console.log(this.isClickSearch);
     },
+    isShowLanguageMenu() {
+      console.log(this.isShowLanguageMenu);
+    },
   },
   methods: {
     onSearch() {
@@ -116,11 +142,22 @@ export default {
       this.isClickSearch = !this.isClickSearch;
     },
     onLanguageMenu() {
+      console.log("onlanguagemenu");
       this.isShowLanguageMenu = !this.isShowLanguageMenu;
+      this.isShowUserMenu = false;
     },
     onUserMenu() {
       this.isShowUserMenu = !this.isShowUserMenu;
+      this.isShowLanguageMenu = false;
     },
+    onClickOutSideLang() {
+      console.log("onclickoutside()");
+      this.isShowLanguageMenu = false;
+    },
+    onClickOutSideUser(){
+      this.isShowUserMenu = false;
+      
+    }
   },
 };
 </script>
@@ -141,7 +178,7 @@ export default {
   border-bottom-right-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   .navbar {
-    position: relative;
+    // position: relative;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -155,19 +192,11 @@ export default {
     }
     .search {
       .search-btn {
-        cursor: pointer;
         height: 48px;
         width: 48px;
-        border-radius: 100px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 18px;
+        transition: 0.5s;
         &:hover {
           background-color: var(--bg-hover-primary);
-        }
-        &:focus {
-          background-color: var(--bg-focus-primary);
         }
       }
       .search-input {
@@ -178,6 +207,7 @@ export default {
         border-radius: 10px;
         transition: width 0.5s;
         padding: 4px 0px;
+        color: #fff;
       }
       .changeWidth {
         padding: 4px 10px;
@@ -189,43 +219,31 @@ export default {
         rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
       background-color: var(--bg-btn-primary);
       margin: 0 10px;
-      width: 90px;
-      height: 36px;
+      width: 86px;
       padding: 0 16px;
       border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
+      transition: 0.5s;
       &:hover {
         background-color: var(--bg-hover-second);
       }
-      .flagImage {
-        width: 34px;
-        height: 17px;
-        border-radius: 4px;
-      }
-      .arrowDownIcon {
-        font-size: 10px;
-      }
+    }
+    .flagImage {
+      width: 34px;
+      height: 22px;
+      border-radius: 4px;
+      margin-right: 8px;
     }
     .menuLanguage {
-      height: 148px;
+      height: 146px;
       position: absolute;
-      top: 10px;
-      right: 10px;
-      border-radius: 4px;
-      background-color: transparent;
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      top: -35px;
+      right: 12px;
+      z-index: -1;
       overflow: hidden;
-      .wrapperMenuItem {
-        margin-top: 52px;
-      }
+      background-color: transparent;
       .menuItem {
-        line-height: 50px;
-        height: 48px;
-        width: 160px;
-        padding: 0px 16px;
+        color: #fff;
+
         background-color: var(--bg-language-menu);
         &:hover {
           background-color: var(--bg-hover-third);
@@ -244,11 +262,6 @@ export default {
         height: 48px;
         width: 48px;
         border-radius: 100%;
-        img {
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-        }
         &:hover {
           background-color: var(--bg-hover-primary);
         }

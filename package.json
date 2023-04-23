@@ -19,12 +19,14 @@
     "swiper": "^9.2.3",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.10",
+    "vueperslides": "^2.16.0"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@nuxtjs/fontawesome": "^1.1.2",
+    "@nuxtjs/vuetify": "^1.12.3",
     "sass": "^1.62.0",
     "sass-loader": "10.1.1"
   }
