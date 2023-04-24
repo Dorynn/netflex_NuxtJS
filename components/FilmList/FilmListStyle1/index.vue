@@ -1,38 +1,35 @@
 <template>
-  <div class="container mt-5">
-    <h1 style="font-size: 60px; font-weight: 600; margin: 0 0px 8px">
-      {{ filmtype }}
-    </h1>
-    <hr style="background-color: #333333; margin: 12px 0 40px" />
-    <div class="wapper">
-    </div>
-    <VueperSlides
-      class="no-shadow"
-      :arrows-outside="false"
-      :visible-slides="4"
-      :bullets="false"
-      :gap="2"
+  <div class="container" v-if="films.length>1">
+    <Title :filmtype="filmtype" />
+    <div class="wapper"></div>
+    <swiper
+      :slides-per-view="4"
+      :space-between="30"
+      :loop="false"
+      :navigation="true"
+      @slideChange="onSlideChange"
       :breakpoints="breakPoints"
-      :touchable="false"
     >
-      <vueper-slide v-for="film in films" :key="film.id" class="cardImage">
-        <template #content>
-          <div
-            @mouseover="showButtonCircle(film.id)"
-            @mouseleave="hideButtonCircle()"
-          >
-            <img :src="`https://image.tmdb.org/t/p/w500${film.backdrop_path}`" alt="" />
+      <swiper-slide v-for="film in films" :key="film.id" class="cardImage">
+        <div
+          @mouseover="showButtonCircle(film.id)"
+          @mouseleave="hideButtonCircle()"
+        >
+          <img
+            :src="`https://image.tmdb.org/t/p/w500${film.backdrop_path}`"
+            alt=""
+          />
 
-            <ButtonCircle
-              v-show="currentId === film.id"
-            />
-          </div>
-          <p class="my-3 font-weight-bold text-center filmTitle">
-            {{ film.title }}
-          </p>
-        </template>
-      </vueper-slide>
-    </VueperSlides>
+          <ButtonCircle v-show="currentId === film.id" :currentId="currentId" />
+        </div>
+        <p
+          class="my-3 font-weight-bold text-center filmTitle"
+          @click="goToFilm(film.id)"
+        >
+          {{ film.title }}
+        </p>
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
@@ -40,14 +37,25 @@
 import { mapActions, mapGetters } from "vuex";
 import ButtonCircle from "../../common/Button/ButtonCircle";
 import { VueperSlides, VueperSlide } from "vueperslides";
+import Title from "~/components/common/Title";
 import "vueperslides/dist/vueperslides.css";
+import { Navigation, Pagination } from "swiper";
+import { SwiperCore, Swiper, SwiperSlide } from "swiper-vue2";
+// Import Swiper styles
+import "swiper/swiper-bundle.css";
+SwiperCore.use([Navigation, Pagination]);
 export default {
   data() {
     return {
       currentId: null,
-      breakPoints:{ 1024: { visibleSlides: 2, slideMulitiple: 2 }, 320:{
-        visibleSlides: 4, slideMulitiple: 4
-      } }
+      breakPoints: {
+        1024: { slidesPerView: 4, spaceBetween: 30 },
+
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+        },
+      },
     };
   },
   props: {
@@ -57,63 +65,49 @@ export default {
     ButtonCircle,
     VueperSlide,
     VueperSlides,
+    Title,
+    Swiper,
+    SwiperSlide,
   },
   computed: {
     ...mapGetters(["films"]),
   },
-  watch: {
-  },
+  watch: {},
 
   methods: {
-    ...mapActions(['getFilms']),
+    ...mapActions(["getFilms"]),
     showButtonCircle(id) {
       this.currentId = id;
     },
     hideButtonCircle() {
       this.currentId = null;
     },
+    goToFilm(id) {
+      this.$router.push(`/film/${id}`);
+    },
+    onSwiper(swiper) {
+      console.log(swiper);
+    },
+    onSlideChange() {
+      console.log("slide change");
+    },
+    goToWatch(id){
+      console.log('clickkk')
+    }
   },
 
   created() {
     this.getFilms();
-    console.log(this)
+    console.log(this);
+  },
+  mounted() {
   },
 };
 </script>
 
 <style lang="scss">
-  // .vueperslides__parallax-wrapper {
-  //   padding-bottom: 20%;
-  //   background-color: green;
-  // }
 .container {
-  // padding: 12px;
-  // width: 90%;
-  // margin: auto;
-  .vueperslides {
-    height: 230px;
-    .vueperslides__inner{
-    }
-  }
-
-  .vueperslides__arrow {
-    top: 50%;
-    transform: translateY(-200%);
-  }
-  // .vueperslides__arrow--prev {
-  //   position: absolute;
-  //   left: 0px;
-  // }
-  // .vueperslides__arrow--next {
-  //   position: absolute;
-  //   right: 0;
-  // }
-  // .wapper {
-  //   display: flex;
-  //   overflow-x: hidden;
-  //   margin-top: 100px;
-  //   height: fit-content;
-  // }
+  margin-top: 40px;
   .cardImage {
     position: relative;
     height: fit-content;
@@ -126,8 +120,6 @@ export default {
     img {
       width: 100%;
       height: auto;
-      // min-height: 150px;
-      // max-height: 250px;
       border-radius: 15px;
       cursor: pointer;
     }
@@ -141,7 +133,6 @@ export default {
   }
 }
 
-@media screen and (min-width: 1024px){
-  
+@media screen and (min-width: 1024px) {
 }
 </style>

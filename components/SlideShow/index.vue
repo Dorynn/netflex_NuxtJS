@@ -9,24 +9,25 @@
       background="#ababab"
       style="text-shadow: 1px 1px 2px #333"
       v-b-hover="showControlSliderIcons"
+
       
       >
       <b-carousel-slide v-for="item in films" :key="item.id">
         <template #img>
           <img
             class="d-block w-100"
-            width="1024"
-            height="700"
-            fluid
+            width="100vw"
+            height="700px"
             :src="`https://image.tmdb.org/t/p/original${item.backdrop_path}`"
             alt="image slot"
+            style="object-fit: cover;"
           />
         </template>
-        <div class="contentSlider text-left">
-          <h1 class="font-weight-bold" style="font-size: 48px;" ref="filmSlider">{{ item.title }}</h1>
-          <p class="mb-4">{{ item.overview }}</p>
-          <ButtonSucess/>
-          <ButtonDanger/>
+        <div class="contentSlider container text-left">
+          <h1 class="font-weight-bold text-wrap" style="font-size: 48px;" ref="filmSlider">{{ item.title }}</h1>
+          <p class="mb-4 overview">{{ item.overview }}</p>
+          <ButtonSucess :currentId="item.id" />
+          <ButtonDanger :currentId="item.id"/>
         </div>
       </b-carousel-slide>
     </b-carousel>
@@ -55,7 +56,7 @@ export default {
     showControlSliderIcons(isHovered){
       const nextIcon=document.querySelector('.carousel-control-next')
       const prevIcon=document.querySelector('.carousel-control-prev')
-      console.log('whatt...', nextIcon)
+      // console.log('whatt...', nextIcon)
       if(isHovered){
         nextIcon.style.right = '15px'
         prevIcon.style.left = '15px'
@@ -65,29 +66,33 @@ export default {
 
       }
     },
+    goToWatch(id){
+      console.log('clickkkk', id)
+      this.$router.push(`/film`)
+    }
   },
 
   created(){
-    console.log('created')
+    // console.log('created')
   },
   beforeMount(){
-    console.log('mount')
+    // console.log('mount')
   },
   mounted(){
-    console.log('mounted', this.$refs.filmSlider)
+    // console.log('mounted', this.$refs.filmSlider)
 
   },
   beforeUpdate(){
-    console.log('before update')
+    // console.log('before update')
   },
   updated(){
-    console.log('updated')
+    // console.log('updated')
   },
   beforeDestroy(){
-    console.log('before destroy')
+    // console.log('before destroy')
   },
   destroyed(){
-    console.log('destroyed')
+    // console.log('destroyed')
   }
 };
 </script>
@@ -101,7 +106,10 @@ export default {
       height: fit-content;
       left: 100px;
       .contentSlider{
-        width: 637px;
+        .overview{
+          width: 816px;
+          
+        }
         .buttonSuccess{
           margin-right: 15px;
         }
@@ -124,6 +132,12 @@ export default {
     }
     .carousel-control-prev{
       left: -40px;
+    }
+  }
+
+  @media  screen and (max-width: 960px) {
+    .overview{
+      display: none;
     }
   }
 </style>

@@ -1,7 +1,6 @@
 <template>
-  <div class="container mt-5">
-    <h1 style="font-size: 60px; font-weight: 600; ">{{ filmtype }}</h1>
-    <hr style="background-color: #333333;"/>
+  <div class="container">
+    <Title :filmtype="filmtype"/>
     <b-row align-h="end" class="wapper">
         <b-col class="card-image" cols="6" sm="6" md="3" lg="3" xl="3" v-for="film in films" :key="film.id">
             <div
@@ -9,9 +8,9 @@
                 @mouseleave="hideButtonCircle()"
             >
                 <img :src="`https://image.tmdb.org/t/p/w500${film.backdrop_path}`" alt="">
-                <ButtonCircle v-show = "isShowCircleButton && currentId===film.id"/>
+                <ButtonCircle v-show = "isShowCircleButton && currentId===film.id" :currentId="currentId"/>
             </div>
-            <p class="my-3 font-weight-bold text-center filmTitle">{{ film.title }}</p>
+            <p class="my-3 font-weight-bold text-center filmTitle" @click="goToFilms(film.id)">{{ film.title }}</p>
         </b-col>
     </b-row>
     <b-pagination
@@ -29,6 +28,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import ButtonCircle from '../../common/Button/ButtonCircle'
+import Title from '~/components/common/Title'
 export default {
     data(){
         return{
@@ -43,14 +43,15 @@ export default {
           filmtype: String
       },
       components:{
-        ButtonCircle
+        ButtonCircle,
+        Title,
       },
       computed:{
           ...mapGetters(['films'])
       },
       watch:{
         isShowCircleButton(){
-            console.log('show: ', this.isShowCircleButton)
+            // console.log('show: ', this.isShowCircleButton)
         }
       },
       methods:{
@@ -60,6 +61,9 @@ export default {
         },
         hideButtonCircle(){
             this.isShowCircleButton = false
+        },
+        goToFilms(id){
+            this.$router.push(`/film/${id}`)
         }
       }
 }
@@ -69,7 +73,7 @@ export default {
 .container{
     // padding: 12px;
     // width: 94%;
-    // margin: auto;
+    margin-top: 40px;
     .wapper{
         display: flex;
         flex-wrap: wrap;

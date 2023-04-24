@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex flex-column">
     <div class="headerDefault">
       <b-navbar toggleable="lg" type="dark">
         <nuxt-link to="/" class="home-btn">Home</nuxt-link>
@@ -102,10 +102,10 @@
     <nuxt />
     <div class="footerDefault">
       <div class="socialLinkList">
-        <font-awesome-icon :icon="['fab', 'facebook']" />
-        <font-awesome-icon :icon="['fab', 'twitter']" />
-        <font-awesome-icon :icon="['fab', 'linkedin']" />
-        <font-awesome-icon :icon="['fab', 'instagram']" />
+        <font-awesome-icon :icon="['fab', 'facebook']" class="mx-3"/>
+        <font-awesome-icon :icon="['fab', 'twitter']" class="mx-3"/>
+        <font-awesome-icon :icon="['fab', 'linkedin']" class="mx-3"/>
+        <font-awesome-icon :icon="['fab', 'instagram']" class="mx-3"/>
       </div>
       <hr style="background-color: #333333" />
       <p class="m-0 pb-3">2023 - <strong>Vuetify</strong></p>
@@ -130,19 +130,19 @@ export default {
   },
   watch: {
     isClickSearch() {
-      console.log(this.isClickSearch);
+      // console.log(this.isClickSearch);
     },
     isShowLanguageMenu() {
-      console.log(this.isShowLanguageMenu);
+      // console.log(this.isShowLanguageMenu);
     },
   },
   methods: {
     onSearch() {
-      console.log("clickk");
+      // console.log("clickk");
       this.isClickSearch = !this.isClickSearch;
     },
     onLanguageMenu() {
-      console.log("onlanguagemenu");
+      // console.log("onlanguagemenu");
       this.isShowLanguageMenu = !this.isShowLanguageMenu;
       this.isShowUserMenu = false;
     },
@@ -151,7 +151,7 @@ export default {
       this.isShowLanguageMenu = false;
     },
     onClickOutSideLang() {
-      console.log("onclickoutside()");
+      // console.log("onclickoutside()");
       this.isShowLanguageMenu = false;
     },
     onClickOutSideUser(){
