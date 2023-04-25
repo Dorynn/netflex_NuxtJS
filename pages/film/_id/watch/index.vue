@@ -1,16 +1,16 @@
 <template>
-  <div style="margin-top: 55px" v-if="films.length">
-    <div class="container">
+  <div id="watchPage" style="margin-top: 80px" v-if="films.length">
+    <b-container>
       <b-row>
-        <b-col cols="8">
+        <b-col cols="8" xs="12" lg="8" md="8" sm="12">
           <b-embed
             type="iframe"
             aspect="16by9"
             src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
             allowfullscreen
           ></b-embed>
-          <h2>{{ films[currentIndex].title }} hello</h2>
-          <div class="mb-2">
+          <h2 class="my-3">{{ films[currentIndex].title }}</h2>
+          <div class="mb-4">
             <span
               style="background-color: #1773e3;border-radius: 4px;padding: 3px 8px;margin-right: 4px;"
               ><small class="mr-2">Facebook</small
@@ -27,7 +27,7 @@
               ><font-awesome-icon :icon="['fab', 'twitter']" size="lg"
             /></span>
           </div>
-          <h5>Vote Rate:</h5>
+          <h5 class="text-orange font-weight-bold">Vote Rate:</h5>
           <b-row align-h="between">
             <b-col cols="auto">
               <v-rating
@@ -53,7 +53,7 @@
           <RecommendedList />
         </b-col>
       </b-row>
-    </div>
+    </b-container>
     <FilmListStyle1 :filmtype="'Films Top'" />
     <FilmListStyle1 :filmtype="'Now Playing'" />
   </div>
@@ -87,15 +87,17 @@ export default {
     this.getFilms();
     console.log("created", this.$route.params.id);
   },
-  updated() {},
 };
 </script>
 
 <style lang="scss">
-.v-rating {
-  .v-icon {
-    padding: 0;
-    color: grey;
+#watchPage{
+  .v-rating {
+    .v-icon {
+      padding: 0;
+      color: grey;
+    }
   }
 }
+
 </style>

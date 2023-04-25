@@ -9,8 +9,7 @@ const films = {
     mutations: {
         SET_FILMS(state, data){
             state.films = data
-        }
-
+        },
     },
     actions: {
         async getFilms({commit}){

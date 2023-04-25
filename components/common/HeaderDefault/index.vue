@@ -1,0 +1,312 @@
+<template>
+  <div>
+
+    <div id="headerDefault">
+      <b-navbar type="dark" >
+        <b-navbar-nav>
+          <b-nav-item
+            ><nuxt-link class="home-btn" to="/">Home</nuxt-link></b-nav-item
+          >
+          <b-nav-item
+            ><nuxt-link class="home-btn" to="/test">Test</nuxt-link></b-nav-item
+          >
+        </b-navbar-nav>
+  
+        <b-navbar-nav>
+          <b-nav-form class="search">
+            <input
+              type="text"
+              class="search-input"
+              :class="{ changeWidth: isClickSearch }"
+              placeholder="Please enter value..."
+            />
+            <v-btn icon dark class="search-btn" @click="onSearch()">
+              <font-awesome-icon :icon="['fas', 'magnifying-glass']" size="lg" />
+            </v-btn>
+          </b-nav-form>
+          <v-btn
+            dark
+            class="languageOption"
+            @click="onLanguageMenu()"
+            v-click-outside="onClickOutSideLang"
+          >
+            <img
+              src="~/assets/images/FlagEN.jpg"
+              alt="Flag of England"
+              class="flagImage"
+            />
+            <font-awesome-icon :icon="['fas', 'chevron-down']" size="xs" />
+          </v-btn>
+          <v-card
+            class="mx-auto mt-5 menuLanguage"
+            min-width="160px"
+            v-show="isShowLanguageMenu"
+          >
+            <v-list class="p-0" style="margin-top: 50px">
+              <v-list-item-group>
+                <v-list-item class="menuItem">
+                  <img
+                    src="~/assets/images/FlagEN.jpg"
+                    alt="Flag of England"
+                    class="flagImage"
+                  />
+                  <v-list-item-content>ENG</v-list-item-content>
+                </v-list-item>
+                <v-list-item class="menuItem">
+                  <img
+                    src="~/assets/images/vietnam-flag.png"
+                    alt="Flag of England"
+                    class="flagImage"
+                  />
+                  <v-list-item-content>VIE</v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-card>
+  
+          <div
+            class="userAccount"
+            @click="onUserMenu"
+            v-click-outside="onClickOutSideUser"
+          >
+            <v-avatar size="28px">
+              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+            </v-avatar>
+          </div>
+  
+          <v-card
+            class="mx-auto mt-5 menuLanguage"
+            min-width="130px"
+            v-show="isShowUserMenu"
+          >
+            <v-list class="p-0" style="margin-top: 50px">
+              <v-list-item-group>
+                <v-list-item class="menuItem">
+                  <font-awesome-icon
+                    :icon="['fas', 'right-to-bracket']"
+                    class="mr-3"
+                  />
+                  <v-list-item-content v-b-modal.modal-login
+                    >Login</v-list-item-content
+                  >
+                </v-list-item>
+                <v-list-item class="menuItem" v-b-modal.modal-sign-up>
+                  <font-awesome-icon :icon="['fas', 'user-plus']" class="mr-3" />
+                  <v-list-item-content>Sign Up</v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-card>
+          <LoginModal />
+          <SignUpModal />
+        </b-navbar-nav>
+      </b-navbar>
+    </div>
+    <div id="sideBar" class="d-none">
+      <v-btn icon dark v-b-toggle.sidebar-1
+        ><font-awesome-icon :icon="['fas', 'bars']"
+      /></v-btn>
+      <b-sidebar id="sidebar-1" bg-variant="dark">
+        <template #title>
+          <img src="~/assets/images/logo.png" width=120px alt="">
+        </template>
+      </b-sidebar>
+    </div>
+  </div>
+</template>
+
+<script>
+import LoginModal from "~/components/common/Modal/LoginModal";
+import SignUpModal from "~/components/common/Modal/SignUpModal";
+export default {
+  components: {
+    LoginModal,
+    SignUpModal,
+  },
+  data() {
+    return {
+      isClickSearch: false,
+      isShowLanguageMenu: false,
+      isShowUserMenu: false,
+    };
+  },
+  watch: {
+    isClickSearch() {
+      // console.log(this.isClickSearch);
+    },
+    isShowLanguageMenu() {
+      // console.log(this.isShowLanguageMenu);
+    },
+  },
+  methods: {
+    onSearch() {
+      // console.log("clickk");
+      this.isClickSearch = !this.isClickSearch;
+    },
+    onLanguageMenu() {
+      // console.log("onlanguagemenu");
+      this.isShowLanguageMenu = !this.isShowLanguageMenu;
+      this.isShowUserMenu = false;
+    },
+    onUserMenu() {
+      this.isShowUserMenu = !this.isShowUserMenu;
+      this.isShowLanguageMenu = false;
+    },
+    onClickOutSideLang() {
+      // console.log("onclickoutside()");
+      this.isShowLanguageMenu = false;
+    },
+    onClickOutSideUser() {
+      this.isShowUserMenu = false;
+    },
+  },
+
+  // mounted() {
+  //   // const sidebar = document.querySelector(".b-sidebar");
+  //   const sidebar1 = document.getElementById("sidebar-1");
+  //   const sidebarBody = document.querySelector(".b-sidebar-body");
+  //   const sidebarHeader = document.querySelector(".b-sidebar-header");
+  //   const closeButton = document.querySelector(".b-sidebar-header .bi-x");
+  //   console.log(sidebar1);
+  //   sidebar1.style.zIndex = "-10000";
+  //   // sidebar1.style.top = "60px";
+  //   sidebar1.style.width = "256px";
+  //   sidebarBody.style.backgroundColor = "#363636";
+  //   sidebarHeader.style.cssText = `
+  //     background-color: #363636;
+  //     color: #fff
+  //   `;
+  //   closeButton.style.color="#ffffff"
+  // },
+
+  updated() {
+    const sidebar1 = document.getElementById("sidebar-1");
+    console.log("update", sidebar1);
+  },
+};
+</script>
+
+<style lang="scss">
+#sidebar-1 {
+  top: 60px;
+  width: 256px;
+  background-color: green;
+  .b-sidebar-body, .b-sidebar-header{
+    background-color: #363636;
+  }
+  .bi-x{
+    color: white;
+  }
+}
+#headerDefault {
+  position: fixed;
+  padding: 0 16px;
+  top: 0;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  color: #fff;
+  height: 60px;
+  background-color: var(--primary-color);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  .navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .home-btn {
+      color: #fff;
+      text-decoration: none;
+      transition: 0.5s;
+      &:hover {
+        color: var(--hover-color);
+      }
+    }
+    .search {
+      .search-btn {
+        height: 48px;
+        width: 48px;
+        transition: 0.5s;
+        &:hover {
+          background-color: var(--bg-hover-primary);
+        }
+      }
+      .search-input {
+        width: 0;
+        background-color: var(--bg-input-primary);
+        outline: none;
+        border: none;
+        border-radius: 10px;
+        transition: width 0.5s;
+        padding: 4px 0px;
+        color: #fff;
+      }
+      .changeWidth {
+        padding: 4px 10px;
+        width: 400px;
+      }
+    }
+    .languageOption {
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      background-color: var(--bg-btn-primary);
+      margin: 0 10px;
+      width: 86px;
+      padding: 0 16px;
+      border-radius: 4px;
+      transition: 0.5s;
+      &:hover {
+        background-color: var(--bg-hover-second);
+      }
+    }
+    .flagImage {
+      width: 34px;
+      height: 22px;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+    .menuLanguage {
+      height: 146px;
+      position: absolute;
+      top: -35px;
+      right: 12px;
+      z-index: -1;
+      overflow: hidden;
+      background-color: transparent;
+      .menuItem {
+        color: #fff;
+
+        background-color: var(--bg-language-menu);
+        &:hover {
+          background-color: var(--bg-hover-third);
+        }
+      }
+    }
+    .navbar-nav {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      .userAccount {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        height: 48px;
+        width: 48px;
+        border-radius: 100%;
+        &:hover {
+          background-color: var(--bg-hover-primary);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 960px){
+  #sideBar{
+    display: block;
+  }
+}
+</style>

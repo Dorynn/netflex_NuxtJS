@@ -1,5 +1,5 @@
 <template>
-    <button class="buttonCircle" @click="goToWatch()">
+    <button class="buttonCircle" @click="goToFilm()">
         <font-awesome-icon :icon="['fas', 'play']" />
     </button>
 </template>
@@ -12,8 +12,7 @@ export default {
     }
   },
   methods:{
-    goToWatch(){
-      console.log('onclick....')
+    goToFilm(){
       this.$router.push(`/film/${this.currentId}`)
     }
   }
@@ -28,6 +27,5 @@ export default {
     padding: 2px 10px 2px 12px;
     border-radius: 100px;
     background-color: var(--button-circle);
-    z-index: 1000;
   }
 </style>

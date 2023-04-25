@@ -39,12 +39,10 @@ export default {
       margin: 0;
     }
   }
-
   .modal-body {
     display: flex;
     flex-direction: column;
     padding: 16px 20px;
-
     #email, #password{
         // padding: 8px 0;
         background-color: transparent;
@@ -57,15 +55,12 @@ export default {
             color: #bcbcbc;
         }
     }
-
     .textGroup{
         display: flex;
         justify-content: space-between;
         font-size: 12px;
     }
   }
-
-
   .modal-footer {
     border-top: 1px solid #393939;
     padding: 5px 12px;
@@ -76,14 +71,12 @@ export default {
         font-weight: 600;
         transition: 0.5s;
     }
-
     .btn.btn-secondary{
         color: #c94439;
         &:hover{
             background-color: var(--bg-hover-close)
         }
     }
-
     .btn.btn-primary{
         color: #4caf50;
         &:hover{

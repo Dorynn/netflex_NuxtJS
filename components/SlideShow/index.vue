@@ -1,5 +1,5 @@
 <template>
-  <div class="slideShow" 
+  <div id="slideShow" 
   >
     <b-carousel
       id="carousel-1"
@@ -66,39 +66,12 @@ export default {
 
       }
     },
-    goToWatch(id){
-      console.log('clickkkk', id)
-      this.$router.push(`/film`)
-    }
   },
-
-  created(){
-    // console.log('created')
-  },
-  beforeMount(){
-    // console.log('mount')
-  },
-  mounted(){
-    // console.log('mounted', this.$refs.filmSlider)
-
-  },
-  beforeUpdate(){
-    // console.log('before update')
-  },
-  updated(){
-    // console.log('updated')
-  },
-  beforeDestroy(){
-    // console.log('before destroy')
-  },
-  destroyed(){
-    // console.log('destroyed')
-  }
 };
 </script>
 
 <style lang="scss">
-  .slideShow{
+  #slideShow{
     overflow: hidden;
     .carousel-caption{
       top: 50%;
@@ -136,8 +109,6 @@ export default {
   }
 
   @media  screen and (max-width: 960px) {
-    .overview{
-      display: none;
-    }
+
   }
 </style>

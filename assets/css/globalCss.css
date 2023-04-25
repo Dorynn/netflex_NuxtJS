@@ -47,3 +47,14 @@ body{
     color: #4caf50;
 }
 
+@media screen and (max-width: 960px) {
+    #recommendedFilm, #footerDefault, #mainActorList, .overview{
+      display: none;
+    }
+    .container{
+        max-width: 900px;
+    }
+    #titleList{
+        font-size:24px !important;
+    }
+}

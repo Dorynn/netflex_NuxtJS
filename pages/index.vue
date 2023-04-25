@@ -8,6 +8,7 @@
 </template>
 
 <script scroped>
+import { mapActions } from "vuex";
 import FilmListStyle1 from "../components/FilmList/FilmListStyle1"
 import FilmListStyle2 from "../components/FilmList/FilmListStyle2"
 export default {
@@ -18,6 +19,12 @@ export default {
   data(){
     return{
     }
+  },
+  methods:{
+    ...mapActions(['getFilms'])
+  },
+  created(){
+    this.getFilms();
   }
 }
 </script>

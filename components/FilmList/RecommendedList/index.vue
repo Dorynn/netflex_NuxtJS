@@ -1,7 +1,7 @@
 <template>
-  <div class="recommendedFilm">
+  <div id="recommendedFilm">
     <h3>Recommended</h3>
-    <div class="film" style="height: 50px; display: flex">
+    <div class="film mb-3" style="height: 50px; display: flex" v-for="i in 10" :key="i">
       <img
         src="~/assets/images/spririted-away-poster.jpg"
         alt=""
@@ -27,7 +27,7 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-.recommendedFilm {
+#recommendedFilm {
   .film {
     .b-rating {
       border: none;
