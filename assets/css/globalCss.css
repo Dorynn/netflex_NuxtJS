@@ -37,6 +37,7 @@ body{
     color: #fff;
     font-family: sans-serif;
     padding: 0 !important;
+    position: unset;
 }
 
 .text-orange{
@@ -47,7 +48,7 @@ body{
     color: #4caf50;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 959px) {
     #recommendedFilm, #footerDefault, #mainActorList, .overview{
       display: none;
     }

@@ -73,6 +73,7 @@ export default {
 <style lang="scss">
   #slideShow{
     overflow: hidden;
+    margin-bottom: 35px;
     .carousel-caption{
       top: 50%;
       transform: translateY(-50%);

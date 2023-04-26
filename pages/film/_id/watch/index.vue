@@ -2,7 +2,7 @@
   <div id="watchPage" style="margin-top: 80px" v-if="films.length">
     <b-container>
       <b-row>
-        <b-col cols="8" xs="12" lg="8" md="8" sm="12">
+        <b-col cols="12" xs="12" lg="8" md="8" sm="12">
           <b-embed
             type="iframe"
             aspect="16by9"

@@ -1,19 +1,24 @@
 <template>
   <div>
-
     <div id="headerDefault">
-      <b-navbar type="dark" >
-        <b-navbar-nav>
-          <b-nav-item
-            ><nuxt-link class="home-btn" to="/">Home</nuxt-link></b-nav-item
-          >
-          <b-nav-item
-            ><nuxt-link class="home-btn" to="/test">Test</nuxt-link></b-nav-item
-          >
-        </b-navbar-nav>
-  
+      <b-navbar type="dark" toggleable="lg">
+        <v-btn icon dark v-b-toggle.sidebar-1 large id="toggleMenu"><font-awesome-icon :icon="['fas', 'bars']" size="lg"/></v-btn>
+        <b-collapse is-nav id="collapseMenu">
+          <b-navbar-nav>
+            <b-nav-item
+              ><nuxt-link class="home-btn" to="/">Home</nuxt-link></b-nav-item
+            >
+            <b-nav-item
+              ><nuxt-link class="home-btn" to="/test"
+                >Test</nuxt-link
+              ></b-nav-item
+            >
+          </b-navbar-nav>
+        </b-collapse>
+
         <b-navbar-nav>
           <b-nav-form class="search">
+            
             <input
               type="text"
               class="search-input"
@@ -21,7 +26,10 @@
               placeholder="Please enter value..."
             />
             <v-btn icon dark class="search-btn" @click="onSearch()">
-              <font-awesome-icon :icon="['fas', 'magnifying-glass']" size="lg" />
+              <font-awesome-icon
+                :icon="['fas', 'magnifying-glass']"
+                size="lg"
+              />
             </v-btn>
           </b-nav-form>
           <v-btn
@@ -63,7 +71,7 @@
               </v-list-item-group>
             </v-list>
           </v-card>
-  
+
           <div
             class="userAccount"
             @click="onUserMenu"
@@ -73,7 +81,7 @@
               <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
             </v-avatar>
           </div>
-  
+
           <v-card
             class="mx-auto mt-5 menuLanguage"
             min-width="130px"
@@ -91,7 +99,10 @@
                   >
                 </v-list-item>
                 <v-list-item class="menuItem" v-b-modal.modal-sign-up>
-                  <font-awesome-icon :icon="['fas', 'user-plus']" class="mr-3" />
+                  <font-awesome-icon
+                    :icon="['fas', 'user-plus']"
+                    class="mr-3"
+                  />
                   <v-list-item-content>Sign Up</v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -102,16 +113,15 @@
         </b-navbar-nav>
       </b-navbar>
     </div>
-    <div id="sideBar" class="d-none">
-      <v-btn icon dark v-b-toggle.sidebar-1
-        ><font-awesome-icon :icon="['fas', 'bars']"
-      /></v-btn>
-      <b-sidebar id="sidebar-1" bg-variant="dark">
-        <template #title>
-          <img src="~/assets/images/logo.png" width=120px alt="">
-        </template>
-      </b-sidebar>
-    </div>
+    <b-sidebar id="sidebar-1" bg-variant="dark" backdrop z-index="99" @shown="preventScoll()" @hidden="availableScroll()">
+      <template #title>
+        <img src="~/assets/images/logo.png" width="120px" alt="" />
+      </template>
+      <v-btn text class="mx-2 mt-4 homeDirection text-capitalize">
+        <font-awesome-icon :icon="['fas', 'house']" class="mr-5" />
+        <nuxt-link to="/">Home</nuxt-link>
+      </v-btn>
+    </b-sidebar>
   </div>
 </template>
 
@@ -142,6 +152,7 @@ export default {
     onSearch() {
       // console.log("clickk");
       this.isClickSearch = !this.isClickSearch;
+      document.querySelector('.search .search-input').focus()
     },
     onLanguageMenu() {
       // console.log("onlanguagemenu");
@@ -159,26 +170,14 @@ export default {
     onClickOutSideUser() {
       this.isShowUserMenu = false;
     },
+    preventScoll(){
+      document.querySelector('body').style.position="fixed"
+      console.log('side open', document.querySelector('body'))
+    },
+    availableScroll(){
+      document.querySelector('body').style.position="unset"
+    }
   },
-
-  // mounted() {
-  //   // const sidebar = document.querySelector(".b-sidebar");
-  //   const sidebar1 = document.getElementById("sidebar-1");
-  //   const sidebarBody = document.querySelector(".b-sidebar-body");
-  //   const sidebarHeader = document.querySelector(".b-sidebar-header");
-  //   const closeButton = document.querySelector(".b-sidebar-header .bi-x");
-  //   console.log(sidebar1);
-  //   sidebar1.style.zIndex = "-10000";
-  //   // sidebar1.style.top = "60px";
-  //   sidebar1.style.width = "256px";
-  //   sidebarBody.style.backgroundColor = "#363636";
-  //   sidebarHeader.style.cssText = `
-  //     background-color: #363636;
-  //     color: #fff
-  //   `;
-  //   closeButton.style.color="#ffffff"
-  // },
-
   updated() {
     const sidebar1 = document.getElementById("sidebar-1");
     console.log("update", sidebar1);
@@ -188,16 +187,42 @@ export default {
 
 <style lang="scss">
 #sidebar-1 {
-  top: 60px;
   width: 256px;
-  background-color: green;
-  .b-sidebar-body, .b-sidebar-header{
+  display: none;
+  .b-sidebar-body,
+  .b-sidebar-header {
     background-color: #363636;
   }
-  .bi-x{
+  .b-sidebar-header{
+    margin-top: 60px;
+  }
+  .bi-x {
     color: white;
   }
+  .homeDirection {
+    color: white;
+    padding: 10px 115px 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+      background-color: #464646;
+    }
+    a{
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
 }
+#toggleMenu{
+  display: none;
+}
+.b-sidebar-backdrop{
+  opacity: 0.3;
+  display: none;
+}
+
 #headerDefault {
   position: fixed;
   padding: 0 16px;
@@ -236,16 +261,19 @@ export default {
       .search-input {
         width: 0;
         background-color: var(--bg-input-primary);
-        outline: none;
+
         border: none;
         border-radius: 10px;
         transition: width 0.5s;
         padding: 4px 0px;
         color: #fff;
+        // outline-color: #fff;
       }
       .changeWidth {
         padding: 4px 10px;
         width: 400px;
+        border: none;
+        outline: none;
       }
     }
     .languageOption {
@@ -304,9 +332,13 @@ export default {
   }
 }
 
-@media screen and (max-width: 960px){
-  #sideBar{
+@media screen and (max-width: 991px) {
+  #sidebar-1, #toggleMenu, .b-sidebar-backdrop {
     display: block;
   }
+  // body{
+  //   position: fixed;
+  // }
+
 }
 </style>

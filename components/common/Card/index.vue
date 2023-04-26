@@ -4,7 +4,7 @@
       <img :src="src" alt="" />
       <ButtonCircle v-show="isShowCircleButton" :currentId="id"/>
     </div>
-    <p class="mt-3 mb-0 font-weight-bold text-center filmTitle" @click="goToFilm()">{{ title }} hello</p>
+    <p class="mt-3 mb-0 font-weight-bold text-center filmTitle" @click="goToFilm()">{{ title }}</p>
   </div>
 </template>
 
@@ -54,6 +54,7 @@ export default {
   .filmTitle {
     transition: 0.5s;
     cursor: pointer;
+    transition: 0.5s;
     &:hover {
       color: var(--hover-color);
     }

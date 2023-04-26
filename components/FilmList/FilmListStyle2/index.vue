@@ -1,13 +1,14 @@
 <template>
-  <div class="container">
+  <b-container>
     <Title :filmtype="filmtype" />
     <b-row align-h="end">
       <b-col
-        cols="6"
+        cols="6"  
+        xs="6"
         sm="6"
-        md="3"
-        lg="3"
-        xl="3"
+        md="3" 
+        lg="3"  
+        xl="3"   
         v-for="film in films"
         :key="film.id"
       >
@@ -26,7 +27,7 @@
       first-number
       last-number
     ></b-pagination>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -60,6 +61,7 @@ export default {
 .container {
   margin-top: 40px;
   .b-pagination {
+    margin-top: 50px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);

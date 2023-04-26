@@ -2,7 +2,7 @@
     <div id="filmIntrodutionPage" v-if="films.length">
       <b-container class="mb-5">
         <b-row>
-          <b-col cols="4" lg="3" md="3" sm="12" xs="12" >
+          <b-col cols="12" lg="3" md="3" sm="12" xs="12" >
             <img
               :src="`https://image.tmdb.org/t/p/w500/${films[currentIndex].poster_path}`"
               width="100%"
@@ -10,7 +10,7 @@
               alt=""
             />
           </b-col>
-          <b-col cols="5" lg="6" md="6" sm="12" xs="12" class="briefFilm">
+          <b-col cols="12" lg="6" md="6" sm="12" xs="12" class="briefFilm">
             <h2 class="font-weight-bold">{{ films[currentIndex].title }}</h2>
             <div class="my-3">
               <span>Genres:</span>
@@ -112,14 +112,14 @@
       }
     }
   }
-  @media screen and (max-width: 959px) {
-    #recommendedFilm, #mainActorList, #footerDefault{
-      display: none;
-    }
-    .container{
-      max-width: 900px;
-    }
-  }
+  // @media screen and (max-width: 959px) {
+  //   #recommendedFilm, #mainActorList, #footerDefault{
+  //     display: none;
+  //   }
+  //   .container{
+  //     max-width: 900px;
+  //   }
+  // }
   // @media (min-width: 768px){
   // }
   </style>
