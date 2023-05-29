@@ -46,7 +46,7 @@
           </b-col>
         </b-row>
       </b-container>
-      <MainActorList/>
+      <MainActorList :filmtype="'Main Actors'"/>
       <FilmListStyle1 :filmtype="'Films Top'" />
     </div>
   </template>
@@ -55,10 +55,10 @@
   import { mapActions, mapGetters } from "vuex";
   import ButtonSuccess from "~/components/common/Button/ButtonSuccess";
   import ButtonDanger from "~/components/common/Button/ButtonDanger";
-  import FilmListStyle1 from "~/components/FilmList/FilmListStyle1";
-  import RecommendedList from "~/components/FilmList/RecommendedList"
+  import FilmListStyle1 from "~/components/FilmListStyle1";
+  import RecommendedList from "~/components/RecommendedList"
   import Title from '~/components/common/Title';
-  import MainActorList from '~/components/FilmList/MainActorList'
+  import MainActorList from '~/components/MainActorList'
   export default {
     components: {
       ButtonDanger,

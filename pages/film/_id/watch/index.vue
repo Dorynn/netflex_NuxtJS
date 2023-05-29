@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import RecommendedList from "~/components/FilmList/RecommendedList";
-import FilmListStyle1 from "~/components/FilmList/FilmListStyle1";
+import RecommendedList from "~/components/RecommendedList";
+import FilmListStyle1 from "~/components/FilmListStyle1";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {

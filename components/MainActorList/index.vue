@@ -1,6 +1,5 @@
 <template>
-    <b-container id="mainActorList">
-        <Title :filmtype ="'Main Actor'"/>
+    <FilmList id="mainActorList" :filmtype="filmtype">
         <div class="row actorList">
           <div class="actorCard col-2" v-for="i in 6" :key="i">
             <img src="~/assets/images/user.jpg" alt="" style="object-fit: cover;"/>
@@ -8,17 +7,17 @@
             <strong>Chihiro Ogino / Sen (voice)</strong>
           </div>
         </div>
-      </b-container>
+      </FilmList>
 </template>
 
 <script>
-import Title from '~/components/common/Title'
+import FilmList from '~/components/FilmList';
 export default {
     props:{
         filmtype:String
     },
     components:{
-        Title,
+        FilmList,
     }
 }
 </script>

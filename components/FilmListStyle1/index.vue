@@ -1,10 +1,9 @@
 <template>
-  <b-container class="mt-3" v-if="films.length>1">
-    <Title :filmtype="filmtype" />
+  <FilmList :filmtype="filmtype">
     <swiper
       :slides-per-view="4"
       :space-between="30"
-      :loop="true"
+      :loop="false"
       :navigation="true"
       :breakpoints="breakPoints"
     >
@@ -16,17 +15,15 @@
         />
       </swiper-slide>
     </swiper>
-  </b-container>
+  </FilmList>
 </template>
 
 <script>
-import Title from "~/components/common/Title";
-import Card from '~/components/common/Card'
+import Card from '~/components/common/Card';
+import FilmList from "~/components/FilmList";
 import {mapGetters } from "vuex";
-import { VueperSlides, VueperSlide } from "vueperslides";
 import { Navigation, Pagination } from "swiper";
 import { SwiperCore, Swiper, SwiperSlide } from "swiper-vue2";
-import "vueperslides/dist/vueperslides.css";
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
 SwiperCore.use([Navigation, Pagination]);
@@ -47,12 +44,10 @@ export default {
     filmtype: String,
   },
   components: {
-    VueperSlide,
-    VueperSlides,
-    Title,
     Card,
     Swiper,
     SwiperSlide,
+    FilmList
   },
   computed: {
     ...mapGetters(["films"]),
@@ -60,8 +55,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.container {
-  margin-top: 40px;
-}
-</style>

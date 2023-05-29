@@ -9,8 +9,8 @@
 
 <script scroped>
 import { mapActions } from "vuex";
-import FilmListStyle1 from "../components/FilmList/FilmListStyle1"
-import FilmListStyle2 from "../components/FilmList/FilmListStyle2"
+import FilmListStyle1 from "~/components/FilmListStyle1"
+import FilmListStyle2 from "~/components/FilmListStyle2"
 export default {
   name: 'IndexPage',
   components:{

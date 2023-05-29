@@ -76,29 +76,31 @@
       </swiper-slide>
     </swiper>
 
-    <div v-for="film in films" :key="film.id"></div>
+    <FilmList :filmtype="'Top Film'">
+      <swiper
+        :slides-per-view="4"
+        :space-between="30"
+        :loop="false"
+        :navigation="true"
+        @slideChange="onSlideChange"
+        :breakpoints="breakPoints"
+      >
+        <swiper-slide v-for="film in films" :key="film.id" >
+          <Card
+            :id="film.id"
+            :title="film.title"
+            :src="`https://image.tmdb.org/t/p/w500${film.backdrop_path}`"
+          />
+        </swiper-slide>
+      </swiper>
+    </FilmList>
 
-    <swiper
-      :slides-per-view="4"
-      :space-between="30"
-      :loop="false"
-      :navigation="true"
-      @slideChange="onSlideChange"
-      :breakpoints="breakPoints"
-    >
-      <swiper-slide v-for="film in films" :key="film.id" >
-        <Card
-          :id="film.id"
-          :title="film.title"
-          :src="`https://image.tmdb.org/t/p/w500${film.backdrop_path}`"
-        />
-      </swiper-slide>
-    </swiper>
   </div>
 </template>
 
 <script>
 import Card from "~/components/common/Card";
+import FilmList from "~/components/FilmList";
 import { Navigation, Pagination } from "swiper";
 import { SwiperCore, Swiper, SwiperSlide } from "swiper-vue2";
 // Import Swiper styles
@@ -111,6 +113,7 @@ export default {
     Swiper,
     SwiperSlide,
     Card,
+    FilmList
   },
   data(){
     return{

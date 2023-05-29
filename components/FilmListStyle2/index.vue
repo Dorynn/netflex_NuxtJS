@@ -1,6 +1,5 @@
 <template>
-  <b-container>
-    <Title :filmtype="filmtype" />
+  <FilmList :filmtype="filmtype">
     <b-row align-h="end">
       <b-col
         cols="6"  
@@ -27,13 +26,12 @@
       first-number
       last-number
     ></b-pagination>
-  </b-container>
+  </FilmList>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import ButtonCircle from "../../common/Button/ButtonCircle";
-import Title from "~/components/common/Title";
+import FilmList from "~/components/FilmList";
 import Card from "~/components/common/Card";
 export default {
   data() {
@@ -47,9 +45,8 @@ export default {
     filmtype: String,
   },
   components: {
-    ButtonCircle,
-    Title,
     Card,
+    FilmList
   },
   computed: {
     ...mapGetters(["films"]),

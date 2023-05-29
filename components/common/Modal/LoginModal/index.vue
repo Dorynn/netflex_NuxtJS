@@ -19,7 +19,7 @@
     <input type="password" placeholder="Password" id="password" />
 
     <div class="textGroup">
-      <p class="text-orange">You don't have an account? <span class="text-green font-weight-bold" v-b-modal.modal-sign-up>Sign Up</span></p>
+      <p class="text-orange">You don't have an account? <span class="text-green font-weight-bold" v-b-modal.modal-sign-up @click="$bvModal.hide('modal-login')">Sign Up</span></p>
       <p class="text-green font-weight-bold">Forgot Password?</p>
     </div>
   </b-modal>
