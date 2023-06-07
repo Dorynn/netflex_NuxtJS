@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   props:{
     currentId: {
@@ -14,8 +16,9 @@ export default {
   methods:{
     goToFilm(){
       this.$router.push(`/film/${this.currentId}`)
-    }
-  }
+    },
+
+  },
 }
 </script>
 

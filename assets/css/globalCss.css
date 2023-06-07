@@ -48,6 +48,16 @@ body{
     color: #4caf50;
 }
 
+.filmTitle {
+    transition: 0.5s;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.filmTitle:hover {
+  color: var(--hover-color);
+}
+
 @media screen and (max-width: 959px) {
     #recommendedFilm, #footerDefault, #mainActorList, .overview{
       display: none;

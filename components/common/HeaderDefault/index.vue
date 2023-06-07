@@ -2,7 +2,9 @@
   <div>
     <div id="headerDefault">
       <b-navbar type="dark" toggleable="lg">
-        <v-btn icon dark v-b-toggle.sidebar-1 large id="toggleMenu"><font-awesome-icon :icon="['fas', 'bars']" size="lg"/></v-btn>
+        <v-btn icon dark v-b-toggle.sidebar-1 large id="toggleMenu"
+          ><font-awesome-icon :icon="['fas', 'bars']" size="lg"
+        /></v-btn>
         <b-collapse is-nav id="collapseMenu">
           <b-navbar-nav>
             <b-nav-item
@@ -18,18 +20,19 @@
 
         <b-navbar-nav>
           <b-nav-form class="search">
-            
-            <input
-              type="text"
-              class="search-input"
-              :class="{ changeWidth: isClickSearch }"
-              placeholder="Please enter value..."
-            />
-            <v-btn icon dark class="search-btn" @click="onSearch()">
-              <font-awesome-icon
-                :icon="['fas', 'magnifying-glass']"
-                size="lg"
+            <form @submit.prevent="">
+              <input
+                type="text"
+                class="search-input"
+                :class="{ changeWidth: isClickSearch }"
+                placeholder="Please enter value..."
+                v-model="keyword"
+                @keyup.enter="goToSearch"
               />
+            </form>
+            <v-btn icon dark class="search-btn" @click="onSearch()">
+              <v-icon v-if="isClickSearch">mdi-close</v-icon>
+              <v-icon v-else>mdi-magnify</v-icon>
             </v-btn>
           </b-nav-form>
           <v-btn
@@ -113,7 +116,14 @@
         </b-navbar-nav>
       </b-navbar>
     </div>
-    <b-sidebar id="sidebar-1" bg-variant="dark" backdrop z-index="99" @shown="preventScoll()" @hidden="availableScroll()">
+    <b-sidebar
+      id="sidebar-1"
+      bg-variant="dark"
+      backdrop
+      z-index="99"
+      @shown="preventScoll()"
+      @hidden="availableScroll()"
+    >
       <template #title>
         <img src="~/assets/images/logo.png" width="120px" alt="" />
       </template>
@@ -138,24 +148,20 @@ export default {
       isClickSearch: false,
       isShowLanguageMenu: false,
       isShowUserMenu: false,
+      keyword: "",
     };
   },
   watch: {
-    isClickSearch() {
-      // console.log(this.isClickSearch);
-    },
-    isShowLanguageMenu() {
-      // console.log(this.isShowLanguageMenu);
+    keyword() {
+      console.log(this.keyword);
     },
   },
   methods: {
     onSearch() {
-      // console.log("clickk");
       this.isClickSearch = !this.isClickSearch;
-      document.querySelector('.search .search-input').focus()
+      document.querySelector(".search .search-input").focus();
     },
     onLanguageMenu() {
-      // console.log("onlanguagemenu");
       this.isShowLanguageMenu = !this.isShowLanguageMenu;
       this.isShowUserMenu = false;
     },
@@ -164,23 +170,25 @@ export default {
       this.isShowLanguageMenu = false;
     },
     onClickOutSideLang() {
-      // console.log("onclickoutside()");
       this.isShowLanguageMenu = false;
     },
     onClickOutSideUser() {
       this.isShowUserMenu = false;
     },
-    preventScoll(){
-      document.querySelector('body').style.position="fixed"
-      console.log('side open', document.querySelector('body'))
+    preventScoll() {
+      document.querySelector("body").style.position = "fixed";
     },
-    availableScroll(){
-      document.querySelector('body').style.position="unset"
+    availableScroll() {
+      document.querySelector("body").style.position = "unset";
+    },
+    goToSearch(){
+      console.log('searchhhh')
+      this.isClickSearch = false;
+      this.$router.push(`/search?query=${this.keyword}`)
     }
   },
   updated() {
     const sidebar1 = document.getElementById("sidebar-1");
-    console.log("update", sidebar1);
   },
 };
 </script>
@@ -193,7 +201,7 @@ export default {
   .b-sidebar-header {
     background-color: #363636;
   }
-  .b-sidebar-header{
+  .b-sidebar-header {
     margin-top: 60px;
   }
   .bi-x {
@@ -207,7 +215,7 @@ export default {
     &:hover {
       background-color: #464646;
     }
-    a{
+    a {
       color: white;
       font-size: 13px;
       font-weight: 600;
@@ -215,10 +223,10 @@ export default {
     }
   }
 }
-#toggleMenu{
+#toggleMenu {
   display: none;
 }
-.b-sidebar-backdrop{
+.b-sidebar-backdrop {
   opacity: 0.3;
   display: none;
 }
@@ -333,12 +341,13 @@ export default {
 }
 
 @media screen and (max-width: 991px) {
-  #sidebar-1, #toggleMenu, .b-sidebar-backdrop {
+  #sidebar-1,
+  #toggleMenu,
+  .b-sidebar-backdrop {
     display: block;
   }
   // body{
   //   position: fixed;
   // }
-
 }
 </style>

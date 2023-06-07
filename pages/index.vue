@@ -1,14 +1,14 @@
 <template>
   <div class="homePage">
     <SlideShow/>
-    <FilmListStyle1 :filmtype="'Films Up Comming'"/>
-    <FilmListStyle1 :filmtype="'Films Top'"/>
-    <FilmListStyle2 :filmtype="'Films Popular'"/>
+    <FilmListStyle1 :filmtype="'Films Up Comming'" :filmList="upcomingFilms"/>
+    <FilmListStyle1 :filmtype="'Films Top'" :filmList="topFilms"/>
+    <FilmListStyle2 :filmtype="'Films Popular'" :filmList="popularFilms"/>
   </div>
 </template>
 
 <script scroped>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import FilmListStyle1 from "~/components/FilmListStyle1"
 import FilmListStyle2 from "~/components/FilmListStyle2"
 export default {
@@ -16,15 +16,25 @@ export default {
   components:{
     FilmListStyle1, FilmListStyle2
   },
+  async asyncData(context){
+    await context.store.dispatch('getUpcomingFilms');
+    await context.store.dispatch('getTopFilms')
+  },
   data(){
     return{
     }
   },
+  computed:{
+    ...mapGetters(['topFilms', 'upcomingFilms', 'popularFilms'])
+  },
   methods:{
-    ...mapActions(['getFilms'])
+    ...mapActions(['getTopFilms', 'getPopularFilms', 'getUpcomingFilms', 'getDetailFilm', 'getNowPlayingFilms'])
   },
   created(){
-    this.getFilms();
+    this.getTopFilms();
+    this.getPopularFilms();
+    this.getUpcomingFilms();
+    this.getNowPlayingFilms();
   }
 }
 </script>

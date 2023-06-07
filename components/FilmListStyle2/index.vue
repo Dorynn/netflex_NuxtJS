@@ -1,5 +1,5 @@
 <template>
-  <FilmList :filmtype="filmtype">
+  <FilmList :filmtype="filmtype" :filmList="filmList">
     <b-row align-h="end">
       <b-col
         cols="6"  
@@ -8,7 +8,7 @@
         md="3" 
         lg="3"  
         xl="3"   
-        v-for="film in films"
+        v-for="film in movies"
         :key="film.id"
       >
         <Card
@@ -19,7 +19,7 @@
       </b-col>
     </b-row>
     <b-pagination
-      v-model="currentPage"
+      v-model="curP"
       :total-rows="rows"
       :per-page="perPage"
       limit="5"
@@ -30,27 +30,62 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import FilmList from "~/components/FilmList";
 import Card from "~/components/common/Card";
 export default {
   data() {
     return {
-      currentPage: 1,
-      rows: 90,
-      perPage: 3,
+      // currentPage: 1,
+      curP:1,
+      perPage: 20,
+      rows:600,
+      movies:null,
     };
+  },
+  async fetch(){
+    // await context.store.dispatch('getPopularFilms')
+    await this.$axios.$get(`https://api.themoviedb.org/3/movie/popular?api_key=e9e9d8da18ae29fc430845952232787c&language=en-US&page=${this.curP}`).then((response)=>{
+      this.movies = response.results
+      console.log(response, this.movies)
+    })
+    // console.log(context)
   },
   props: {
     filmtype: String,
+    filmList:Array,
+  },
+  watch:{
+    curP(){
+      console.log('curwatch',this.curP, this.currentPage)
+      this.$store.commit('SET_CURRENT_PAGE', this.curP);
+      this.$fetch();
+    }
   },
   components: {
     Card,
     FilmList
   },
   computed: {
-    ...mapGetters(["films"]),
+    ...mapGetters(["popularFilms"]),
+    ...mapState(['currentPage'])
   },
+  methods:{
+    ...mapActions(['getPopularFilms']),
+    ...mapMutations(['SET_CURRENT_PAGE'])
+  },
+  created(){
+    // this.curP = this.currentPage
+    console.log('create', this.curP, this.currentPage)
+    console.log('creage2', this.perPage)
+  },
+  beforeMount(){
+    console.log('beforemount', this.$store)
+  },
+  mounted(){
+    console.log('mounted', this.$store)
+  }
+
 };
 </script>
 

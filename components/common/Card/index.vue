@@ -51,14 +51,5 @@ export default {
     border-radius: 15px;
     cursor: pointer;
   }
-  .filmTitle {
-    transition: 0.5s;
-    cursor: pointer;
-    transition: 0.5s;
-    &:hover {
-      color: var(--hover-color);
-    }
-  }
-
 }
 </style>

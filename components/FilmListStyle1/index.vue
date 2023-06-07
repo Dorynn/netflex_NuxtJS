@@ -1,5 +1,5 @@
 <template>
-  <FilmList :filmtype="filmtype">
+  <FilmList :filmtype="filmtype" :film="filmList">
     <swiper
       :slides-per-view="4"
       :space-between="30"
@@ -7,7 +7,7 @@
       :navigation="true"
       :breakpoints="breakPoints"
     >
-      <swiper-slide v-for="film in films" :key="film.id" >
+      <swiper-slide v-for="film in filmList" :key="film.id" >
         <Card
           :id="film.id"
           :title="film.title"
@@ -42,6 +42,7 @@ export default {
   },
   props: {
     filmtype: String,
+    filmList: Array,
   },
   components: {
     Card,
@@ -50,7 +51,6 @@ export default {
     FilmList
   },
   computed: {
-    ...mapGetters(["films"]),
   },
 };
 </script>

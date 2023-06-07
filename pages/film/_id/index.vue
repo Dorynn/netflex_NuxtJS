@@ -1,53 +1,52 @@
 <template>
-    <div id="filmIntrodutionPage" v-if="films.length">
+    <div id="filmIntrodutionPage">
       <b-container class="mb-5">
         <b-row>
           <b-col cols="12" lg="3" md="3" sm="12" xs="12" >
             <img
-              :src="`https://image.tmdb.org/t/p/w500/${films[currentIndex].poster_path}`"
+              :src="`https://image.tmdb.org/t/p/w500/${detailFilm.poster_path}`"
               width="100%"
               height="auto"
               alt=""
+              ref="poster"
             />
           </b-col>
           <b-col cols="12" lg="6" md="6" sm="12" xs="12" class="briefFilm">
-            <h2 class="font-weight-bold">{{ films[currentIndex].title }}</h2>
+            <h2 class="font-weight-bold">{{ detailFilm.title }}</h2>
             <div class="my-3">
               <span>Genres:</span>
-              <b-badge pill variant="primary">Animation</b-badge>
-              <b-badge pill variant="primary">Family</b-badge>
-              <b-badge pill variant="primary">Fantasy</b-badge>
+              <b-badge pill variant="primary" v-for="item in detailFilm.genres" :key="item.id" class="mr-1">{{ item.name }}</b-badge>
             </div>
   
-            <p>Release date: {{ films[currentIndex].release_date }}</p>
-            <p>Runtime: 125 minutes</p>
+            <p>Release date: {{ detailFilm.release_date }}</p>
+            <p>Runtime: {{detailFilm.runtime}} minutes</p>
             <p>
-              {{films[currentIndex].overview}}
+              {{detailFilm.overview}}
             </p>
             <b-form-rating
               id="rating-inline"
               inline
-              :value="films[currentIndex].vote_average"
+              :value="detailFilm.vote_average"
               stars="10"
               size="lg"
               readonly
             ></b-form-rating>
             <p>
-              &#40;{{films[currentIndex].vote_average}}<font-awesome-icon
+              &#40;{{detailFilm.vote_average}}<font-awesome-icon
                 :icon="['fas', 'star']"
                 style="color: var(--star-second); font-size: 20px"
-              />/{{ films[currentIndex].vote_count }} votes&#41;
+              />/{{ detailFilm.vote_count }} votes&#41;
             </p>
             <ButtonSuccess :currentId="$route.params.id"/>
             <ButtonDanger :currentId="$route.params.id"/>
           </b-col>
           <b-col cols="3" lg="3" md="3">
-            <RecommendedList/>
+            <RecommendedList :currentId="$route.params.id"/>
           </b-col>
         </b-row>
       </b-container>
-      <MainActorList :filmtype="'Main Actors'"/>
-      <FilmListStyle1 :filmtype="'Films Top'" />
+      <MainActorList :filmtype="'Main Actors'" :currentId="this.$route.params.id"/>
+      <FilmListStyle1 :filmtype="'Films Top'" :filmList="topFilms"/>
     </div>
   </template>
   
@@ -60,6 +59,17 @@
   import Title from '~/components/common/Title';
   import MainActorList from '~/components/MainActorList'
   export default {
+    async asyncData(context){
+    console.log('context: ', context)
+    await context.store.dispatch('getRecommendFilms', context.params.id)
+    await context.store.dispatch('getActors',context.params.id);
+    await context.store.dispatch('getTopFilms');
+  },
+    data(){
+      return{
+        link:"null"
+      }
+    },
     components: {
       ButtonDanger,
       ButtonSuccess,
@@ -69,18 +79,28 @@
       MainActorList
     },
     computed: {
-      ...mapGetters(["films"]),
+      ...mapGetters(["films",'detailFilm', 'topFilms', 'actors']),
       currentIndex (){
         return this.films.findIndex((item)=>{
                return item.id == this.$route.params.id})
       } 
     },
     methods:{
-        ...mapActions(['getFilms']),
+        ...mapActions(['getFilms', 'getDetailFilm', 'getActors', 'getRecommendFilms', 'getTopFilms']),
     },
     created(){
+        //  this.getRecommendFilms(this.$route.params.id)
         this.getFilms();
-    },
+        this.getDetailFilm(this.$route.params.id);
+        this.link='https://image.tmdb.org/t/p/w500/'
+        console.log(this.detailFilm)
+      },
+      mounted(){
+      // this.$refs.poster.src=this.link+this.detailFilm.poster_path;
+      console.log(this.$refs.poster, this.link)
+      console.log(this.detailFilm)
+    }
+
   };
   </script>
   
@@ -88,7 +108,7 @@
   #filmIntrodutionPage {
     margin-top: 70px;
     .badge {
-      width: 80px;
+      min-width: 80px;
       height: 24px;
       padding: 6px 10px;
       text-align: left;

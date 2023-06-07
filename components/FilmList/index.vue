@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-3" v-if="films.length > 1">
+  <b-container class="mt-3">
     <Title :filmtype="filmtype" />
     <slot></slot>
   </b-container>
@@ -15,12 +15,13 @@ export default {
   },
   props: {
     filmtype: String,
+    film: Array
   },
   components: {
     Title
   },
   computed: {
-    ...mapGetters(["films"]),
+    ...mapGetters(["films", 'topFilms']),
   },
 };
 </script>

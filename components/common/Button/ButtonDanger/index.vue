@@ -17,7 +17,10 @@ export default {
   methods:{
     goToWatch(){
       this.$router.push(`/film/${this.currentId}/watch`)
-    }
+    },
+  },
+  create(){
+    
   }
 };
 </script>

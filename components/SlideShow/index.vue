@@ -12,7 +12,7 @@
 
       
       >
-      <b-carousel-slide v-for="item in films" :key="item.id">
+      <b-carousel-slide v-for="item in popularFilms" :key="item.id">
         <template #img>
           <img
             class="d-block w-100"
@@ -50,7 +50,7 @@ export default {
   watch:{
   },
   computed:{
-    ...mapGetters(['films'])
+    ...mapGetters(['popularFilms'])
   },
   methods: {
     showControlSliderIcons(isHovered){

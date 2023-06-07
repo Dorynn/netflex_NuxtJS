@@ -135,10 +135,10 @@ export default {
       return `https://picsum.photos/600/400/?image=${imageId}`;
     },
     onSwiper(swiper) {
-      console.log(swiper);
+      // console.log(swiper);
     },
     onSlideChange() {
-      console.log("slide change");
+      // console.log("slide change");
     },
     ...mapActions(["getFilms"]),
   },

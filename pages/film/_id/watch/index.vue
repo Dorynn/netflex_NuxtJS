@@ -6,10 +6,10 @@
           <b-embed
             type="iframe"
             aspect="16by9"
-            src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+            :src="`https://www.youtube.com/embed/${detailFilm.videos.results[0].key}?rel=0`"
             allowfullscreen
           ></b-embed>
-          <h2 class="my-3">{{ films[currentIndex].title }}</h2>
+          <h2 class="my-3">{{ detailFilm.title }}</h2>
           <div class="mb-4">
             <span
               style="background-color: #1773e3;border-radius: 4px;padding: 3px 8px;margin-right: 4px;"
@@ -54,8 +54,8 @@
         </b-col>
       </b-row>
     </b-container>
-    <FilmListStyle1 :filmtype="'Films Top'" />
-    <FilmListStyle1 :filmtype="'Now Playing'" />
+    <FilmListStyle1 :filmtype="'Films Top'" :filmList="topFilms"/>
+    <FilmListStyle1 :filmtype="'Now Playing'" :filmList="nowPlayingFilms" />
   </div>
 </template>
 
@@ -68,25 +68,38 @@ export default {
     RecommendedList,
     FilmListStyle1,
   },
+  async asyncData(context){
+    await context.store.dispatch('getRecommendFilms',context.params.id)
+    await context.store.dispatch('getNowPlayingFilms')
+    // return {watchingFilm: res.results}
+  },
   data() {
     return {
       rating: null,
     };
   },
   computed: {
-    ...mapGetters(["films"]),
+    ...mapGetters(["films", 'detailFilm', 'topFilms', 'nowPlayingFilms']),
     currentIndex (){
         return this.films.findIndex((item)=>{
                return item.id == this.$route.params.id})
       }
   },
   methods: {
-    ...mapActions(["getFilms"]),
+    ...mapActions(["getFilms", 'getDetailFilm', 'getNowPlayingFilms', 'getTopFilms', 'getRecommendFilms']),
   },
   created() {
-    this.getFilms();
-    console.log("created", this.$route.params.id);
+    // this.getFilms();
+    this.getDetailFilm(this.$route.params.id);
+    this.getTopFilms();
+    this.getNowPlayingFilms();
+    // console.log("created", this.topFilms);
   },
+
+  mounted() {
+    // console.log("mounted", this.topFilms);
+
+  }
 };
 </script>
 

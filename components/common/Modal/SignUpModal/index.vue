@@ -1,25 +1,30 @@
 <template>
-  <b-modal id="modal-sign-up" centered ok-title="SIGN UP" cancel-title="CLOSE">
-    <template #modal-header>
-      <h2 class="title">
-        Sign Up
-      </h2>
-    </template>
-    <input type="email" placeholder="E-mail" id="email" />
-    <input type="password" placeholder="Password" id="password" />
+    <b-modal id="modal-sign-up" ref="target" centered ok-title="SIGN UP" cancel-title="CLOSE" no-close-on-backdrop>
+      <template #modal-header>
+        <h2 class="title">
+          Sign Up
+        </h2>
+      </template>
+      <input type="email" placeholder="E-mail" id="email" />
+      <input type="password" placeholder="Password" id="password" />
+  
+      <div class="textGroup">
+        <p class="text-orange">Already have an account? <span class="text-green font-weight-bold" v-b-modal.modal-login
+            @click="$bvModal.hide('modal-sign-up')">Login</span></p>
+      </div>
+    </b-modal>
 
-    <div class="textGroup">
-      <p class="text-orange">Already have an account? <span class="text-green font-weight-bold" v-b-modal.modal-login
-          @click="$bvModal.hide('modal-sign-up')">Login</span></p>
-    </div>
-  </b-modal>
 </template>
-
 <script>
 export default {
   data() {
     return {};
   },
+  methods:{
+    preventClose(){
+      console.log('.............')
+    }
+  }
 };
 </script>
 
