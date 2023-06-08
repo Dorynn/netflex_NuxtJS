@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="modal-login" centered ok-title="LOGIN" cancel-title="CLOSE">
+  <b-modal id="modal-login" centered ok-title="LOGIN" cancel-title="CLOSE" no-close-on-backdrop>
     <template #modal-header>
       <h2 class="title">Login</h2>
     </template>

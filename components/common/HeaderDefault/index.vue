@@ -92,14 +92,12 @@
           >
             <v-list class="p-0" style="margin-top: 50px">
               <v-list-item-group>
-                <v-list-item class="menuItem">
+                <v-list-item class="menuItem" v-b-modal.modal-login>
                   <font-awesome-icon
                     :icon="['fas', 'right-to-bracket']"
                     class="mr-3"
                   />
-                  <v-list-item-content v-b-modal.modal-login
-                    >Login</v-list-item-content
-                  >
+                  <v-list-item-content>Login</v-list-item-content>
                 </v-list-item>
                 <v-list-item class="menuItem" v-b-modal.modal-sign-up>
                   <font-awesome-icon
