@@ -1,3 +1,4 @@
+const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhYTIxZTQwYTMyNjdhMjQ3NDVkNWM4MGJmZjVmNzliOCIsInN1YiI6IjY0NDIzYjg3YjNmNmY1MDQ5YzlkZGEzZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ej714Gyl54V-uJqkykAe5PZzWIrKSLbx61SeW3zKA5A"
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -58,7 +59,12 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'https://api.themoviedb.org/3/',
+    headers: {
+      common: {
+        Authorization: `Bearer ${token}`
+      }
+    }
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

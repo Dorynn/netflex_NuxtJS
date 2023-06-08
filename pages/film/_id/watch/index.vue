@@ -1,5 +1,5 @@
 <template>
-  <div id="watchPage" style="margin-top: 80px" v-if="films.length">
+  <div id="watchPage" style="margin-top: 80px">
     <b-container>
       <b-row>
         <b-col cols="12" xs="12" lg="8" md="8" sm="12">
@@ -71,6 +71,8 @@ export default {
   async asyncData(context){
     await context.store.dispatch('getRecommendFilms',context.params.id)
     await context.store.dispatch('getNowPlayingFilms')
+    await context.store.dispatch('getDetailFilm', context.params.id)
+    await context.store.dispatch('getTopFilms')
     // return {watchingFilm: res.results}
   },
   data() {
@@ -79,20 +81,20 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["films", 'detailFilm', 'topFilms', 'nowPlayingFilms']),
+    ...mapGetters(['detailFilm', 'topFilms', 'nowPlayingFilms']),
     currentIndex (){
         return this.films.findIndex((item)=>{
                return item.id == this.$route.params.id})
       }
   },
   methods: {
-    ...mapActions(["getFilms", 'getDetailFilm', 'getNowPlayingFilms', 'getTopFilms', 'getRecommendFilms']),
+    ...mapActions(['getDetailFilm', 'getNowPlayingFilms', 'getTopFilms', 'getRecommendFilms']),
   },
   created() {
     // this.getFilms();
-    this.getDetailFilm(this.$route.params.id);
-    this.getTopFilms();
-    this.getNowPlayingFilms();
+    // this.getDetailFilm(this.$route.params.id);
+    // this.getTopFilms();
+    // this.getNowPlayingFilms();
     // console.log("created", this.topFilms);
   },
 

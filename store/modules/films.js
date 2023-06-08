@@ -55,27 +55,26 @@ const films = {
   actions: {
     async getNowPlayingFilms({ commit }) {
       try {
-        const response = await axios.get(
-          "https://api.themoviedb.org/3/movie/now_playing?api_key=e9e9d8da18ae29fc430845952232787c&language=en-US&page=1"
-        );
+        const response = await this.$axios.get("/movie/now_playing");
         commit("SET_NOW_PLAYING_FILMS", response.data.results);
         // console.log("res", response.data.results);
+        console.log(response)
       } catch (error) {
         console.log(error);
       }
     },
 
     async getUpcomingFilms({ commit }) {
-      const response = await axios.get(
-        "https://api.themoviedb.org/3/movie/upcoming?api_key=e9e9d8da18ae29fc430845952232787c&language=en-US&page=1"
+      const response = await this.$axios.get(
+        "/movie/upcoming"
       );
       commit("SET_UPCOMING_FILMS", response.data.results);
       commit("SET_FILMS", response.data.results);
     },
 
     async getTopFilms({ commit }) {
-      const response = await axios.get(
-        "https://api.themoviedb.org/3/movie/top_rated?api_key=e9e9d8da18ae29fc430845952232787c&language=en-US&page=1"
+      const response = await this.$axios.get(
+        "/movie/top_rated"
       );
       commit("SET_TOP_FILMS", response.data.results);
       commit("SET_FILMS", response.data.results);
@@ -83,8 +82,8 @@ const films = {
     },
 
     async getPopularFilms({ commit }, cur) {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=e9e9d8da18ae29fc430845952232787c&language=en-US&page=${cur}`
+      const response = await this.$axios.get(
+        `/movie/popular?page=${cur}`
       );
       commit('SET_POPULAR_FILMS', response.data.results)
       // console.log(response.data.results);
@@ -93,7 +92,7 @@ const films = {
     },
 
     async getDetailFilm({commit}, id){
-      const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=e9e9d8da18ae29fc430845952232787c&append_to_response=videos`)
+      const response = await this.$axios.get(`/movie/${id}?append_to_response=videos`)
       commit('SET_DETAIL_FILM', response.data);
       // console.log('detail film',response.data)
     },
@@ -103,12 +102,12 @@ const films = {
       commit('SET_FILMS', data)
     },
     async getRecommendFilms({commit}, id){
-      const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=e9e9d8da18ae29fc430845952232787c&language=en-US&page=1`)
+      const response = await this.$axios.get(`/movie/${id}/similar`)
       commit('SET_RECOMMEND_FILMS', response.data.results)
       // console.log('recommend',response.data.results)
     },
     async getActors({commit}, id){
-      const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}/casts?api_key=e9e9d8da18ae29fc430845952232787c`)
+      const response = await this.$axios.get(`/movie/${id}/casts`)
       commit('SET_ACTORS', response.data.cast)
     }
 }
