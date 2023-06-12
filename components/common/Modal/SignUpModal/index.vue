@@ -28,7 +28,6 @@ export default {
     return {
       email:"",
       password:"",
-      // disableButton:false,
     };
   },
   computed:{
@@ -45,18 +44,10 @@ export default {
       this.password="";
     },
     registerAccount(){
-      this.$axios.$post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.fbApiKey}`,{
+      this.$store.dispatch(`authentication`,{
         email: this.email,
         password: this.password,
-        returnSecureToken: true,
-      })
-      .then(result =>{
-        console.log(result)
-        // window.localStorage.setItem('')
-        this.resetData();
-      })
-      .catch(e =>{
-        console.log(e)
+        isLogin: false,
       })
     }
   }

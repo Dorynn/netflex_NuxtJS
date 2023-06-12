@@ -13,14 +13,29 @@ const auth = {
 
     },
     actions: {
-    //   async getNowPlayingFilms({ commit }) {
-    //     try {
-    //       const response = await this.$axios.get(`/movie/now_playing?api_key=${process.env.moviedbApiKey}`);
-    //       commit("SET_NOW_PLAYING_FILMS", response.data.results);
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   },
+
+    async authentication(vuexContext, payload){
+      return new Promise((resolve, reject)=>{
+        let urlAuth = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.fbApiKey}`;
+        if(payload.isLogin)
+          urlAuth = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbApiKey}`;
+        
+        this.$axios.$post(urlAuth,{
+          email: payload.email,
+          password: payload.password,
+          returnSecureToken: true,
+        })
+        .then(result =>{
+          window.localStorage.setItem('token', result.idToken)
+          vuexContext.commit('SET_TOKEN', result.idToken)
+          resolve({success:'true'})
+        })
+        .catch((error)=>{
+          reject(error.response)
+        })
+        
+      })
+    }
   }
   }
   

@@ -80,11 +80,11 @@
             @click="onUserMenu"
             v-click-outside="onClickOutSideUser"
           >
-            <v-avatar size="28px" v-if="token">
+            <v-avatar size="28px" v-if="isLogin">
               <img :src="require('~/assets/images/avatar1.jpg')" alt="John" />
             </v-avatar>
-            <v-btn icon v-else>
-              <v-icon>registered-trademark</v-icon>
+            <v-btn dark icon v-else>
+              <v-icon>mdi-account-plus</v-icon>
             </v-btn>
           </div>
 
@@ -95,22 +95,35 @@
           >
             <v-list class="p-0" style="margin-top: 50px">
               <v-list-item-group>
-                <v-list-item class="menuItem" v-b-modal.modal-login>
+                <v-list-item class="menuItem" v-if="isLogin" @click="goToProfile">
+                  <font-awesome-icon
+                    :icon="['fas', 'user']"
+                    class="mr-3"
+                  />
+                  <v-list-item-content >Profile</v-list-item-content>
+
+                </v-list-item>
+                <v-list-item class="menuItem"  v-b-modal.modal-login v-else>
                   <font-awesome-icon
                     :icon="['fas', 'right-to-bracket']"
                     class="mr-3"
                   />
-                  <v-list-item-content v-if="token">Profile</v-list-item-content>
-                  <v-list-item-content v-else>Login</v-list-item-content>
+                  <v-list-item-content>Login</v-list-item-content>
 
                 </v-list-item>
-                <v-list-item class="menuItem" v-b-modal.modal-sign-up>
+                <v-list-item class="menuItem" v-if="isLogin" @click="gotoLogout">
+                  <font-awesome-icon
+                    :icon="['fas', 'right-from-bracket']"
+                    class="mr-3"
+                  />
+                  <v-list-item-content>Log out</v-list-item-content>
+                </v-list-item>
+                <v-list-item class="menuItem" v-b-modal.modal-sign-up v-else >
                   <font-awesome-icon
                     :icon="['fas', 'user-plus']"
                     class="mr-3"
                   />
-                  <v-list-item-content>Sign Up</v-list-item-content>
-                  <!-- <v-list-item-content>Log out</v-list-item-content> -->
+                  <v-list-item-content >Sign Up</v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
             </v-list>
@@ -140,7 +153,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 import LoginModal from "~/components/common/Modal/LoginModal";
 import SignUpModal from "~/components/common/Modal/SignUpModal";
 export default {
@@ -154,34 +167,26 @@ export default {
       isShowLanguageMenu: false,
       isShowUserMenu: false,
       keyword: "",
+      isLogin: false,
     };
   },
   computed:{
-    token(){
-      return window.localStorage.getItem('token')
-    }
+    ...mapGetters(['token'])
   },
   watch: {
-    keyword() {
-      console.log(this.keyword);
-    },
+    token(){
+      if(this.token)
+        this.isLogin = true;
+      else
+        this.isLogin = false;
+    }
   },
   created(){
-    // this.$axios.$post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbApiKey}`,{
-    //     email: 'dl@hihi.com',
-    //     password: '12345678',
-    //     returnSecureToken: true,
-    //   })
-    //   .then(result => {
-    //     console.log(result);
-    //     this.$store.commit('SET_TOKEN',result.idToken)
-    //   })
-    //   .catch(e =>{
-    //     console.log(e)
-    //   })
-    console.log(this.token)
+    // this.$store.commit('SET_TOKEN', window.localStorage.getItem('token'))
+    this.SET_TOKEN(window.localStorage.getItem('token'))
   },
   methods: {
+    ...mapMutations(['SET_TOKEN']),
     onSearch() {
       this.isClickSearch = !this.isClickSearch;
       document.querySelector(".search .search-input").focus();
@@ -207,11 +212,18 @@ export default {
       document.querySelector("body").style.position = "unset";
     },
     goToSearch(){
-      console.log('searchhhh')
+      // console.log('searchhhh')
       this.isClickSearch = false;
       this.$router.push({path:'/search', query:{query: this.keyword}});
       this.keyword="";
-
+    },
+    goToProfile(){
+      this.$router.push('/profile')
+    },
+    gotoLogout(){
+      this.SET_TOKEN(null)
+      window.localStorage.removeItem('token')
+      this.$router.push('/')
     }
   },
   updated() {

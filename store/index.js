@@ -11,11 +11,16 @@ export default() => new Vuex.Store( {
         auth: auth
     },
     state:{
+        isReload:false,
     },
     getters:{
-
+      isReload: (state) => state.isReload,
     },
     mutations:{
+        SET_RELOAD(state, data){
+            state.isReload = data;
+            window.localStorage.setItem('isReload',data)
+        },
 
     }
 })

@@ -2,18 +2,22 @@
   <FilmList :filmtype="filmtype" :filmList="filmList">
     <b-row align-h="end">
       <b-col
-        cols="6"  
+        cols="6"
         xs="6"
         sm="6"
-        md="3" 
-        lg="3"  
-        xl="3"   
+        md="3"
+        lg="3"
+        xl="3"
         v-for="film in movies"
         :key="film.id"
       >
         <Card
           :id="film.id"
-          :src="film.backdrop_path?`https://image.tmdb.org/t/p/w500${film.backdrop_path}`:null"
+          :src="
+            film.backdrop_path
+              ? `https://image.tmdb.org/t/p/w500${film.backdrop_path}`
+              : null
+          "
           :title="film.title"
         />
       </b-col>
@@ -37,56 +41,54 @@ export default {
   data() {
     return {
       // currentPage: 1,
-      curP:1,
+      curP: 1,
       perPage: 20,
-      rows:600,
-      movies:[],
+      rows: 600,
+      movies: [],
     };
   },
-  async fetch(){
-    // await context.store.dispatch('getPopularFilms')
-    await this.$axios.$get(`/movie/popular?api_key=${process.env.moviedbApiKey}&page=${this.curP}`).then((response)=>{
-      this.movies = response.results
-      console.log(response, this.movies)
-    })
-    // console.log(context)
+  async fetch() {
+    await this.$axios
+      .$get(
+        `/movie/popular?api_key=${process.env.moviedbApiKey}&page=${this.curP}`
+      )
+      .then((response) => {
+        this.movies = response.results;
+        // console.log(response, this.movies)
+      });
   },
   props: {
     filmtype: String,
-    filmList:Array,
+    filmList: Array,
   },
-  watch:{
-    curP(){
-      this.SET_CURRENT_PAGE(this.curP)
-      console.log('curwatch',this.curP, this.currentPage)
-      // this.$store.commit('SET_CURRENT_PAGE', this.curP);
+  watch: {
+    curP() {
+      window.localStorage.setItem("currentPage", this.curP);
       this.$fetch();
-    }
+    },
   },
   components: {
     Card,
-    FilmList
+    FilmList,
   },
   computed: {
-    ...mapGetters(["popularFilms", 'currentPage']),
-    ...mapState(['currentPage'])
+    ...mapGetters(["popularFilms", "currentPage", "isReload"]),
+    ...mapState(["currentPage"]),
   },
-  methods:{
-    ...mapActions(['getPopularFilms']),
-    ...mapMutations(['SET_CURRENT_PAGE'])
+  methods: {
+    ...mapActions(["getPopularFilms"]),
+    ...mapMutations(["SET_CURRENT_PAGE", "SET_RELOAD"]),
   },
-  created(){
-    // this.curP = this.currentPage
-    console.log('create', this.curP, this.currentPage)
-    console.log('creage2', this.perPage)
+  mounted() {
+    window.addEventListener("beforeunload", () => {
+      this.SET_RELOAD(true);
+    });
+    this.SET_RELOAD(window.localStorage.getItem('isReload'));
+    this.SET_CURRENT_PAGE(window.localStorage.getItem('currentPage'));
+    if (window.localStorage.getItem('isReload')) {
+      this.curP = window.localStorage.getItem('currentPage');
+    }
   },
-  beforeMount(){
-    console.log('beforemount', this.$store)
-  },
-  mounted(){
-    console.log('mounted', this.$store)
-  }
-
 };
 </script>
 

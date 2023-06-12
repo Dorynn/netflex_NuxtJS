@@ -62,13 +62,13 @@ export default {
   },
   watch: {
     res() {
-      console.log("change");
+      // console.log("change");
       this.$fetch();
     },
   },
   created() {
     // console.log(this.$route.query.query)
-    console.log(this.res);
+    // console.log(this.res);
   },
 };
 </script>

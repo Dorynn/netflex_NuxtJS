@@ -20,7 +20,7 @@ const films = {
     nowPlayingFilms: (state) => state.nowPlayingFilms,
     actors: (state) => state.actors,
     recommendFilms:(state) => state.recommendFilms,
-    currentPage: state => state.currentPage,
+    currentPage: (state) => state.currentPage,
   },
   mutations: {
     SET_FILMS(state, data) {
@@ -50,7 +50,8 @@ const films = {
       state.actors = data
     },
     SET_CURRENT_PAGE(state, data){
-      state.currentPage = data
+      window.localStorage.setItem('currentPage',data);
+      state.currentPage = data;
     }
   },
   actions: {
@@ -59,9 +60,9 @@ const films = {
         const response = await this.$axios.get(`/movie/now_playing?api_key=${process.env.moviedbApiKey}`);
         commit("SET_NOW_PLAYING_FILMS", response.data.results);
         // console.log("res", response.data.results);
-        console.log(response)
+        // console.log(response)
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     },
 
@@ -105,7 +106,7 @@ const films = {
     },
     async getActors({commit}, id){
       const response = await this.$axios.get(`/movie/${id}/casts?api_key=${process.env.moviedbApiKey}`)
-      console.log(response)
+      // console.log(response)
       commit('SET_ACTORS', response.data.cast)
     }
 }

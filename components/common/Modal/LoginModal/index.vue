@@ -49,19 +49,19 @@ export default {
     ...mapMutations(['SET_TOKEN'])
     ,
     loginAccount(){
-      this.$axios.$post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbApiKey}`,{
+      this.$store.dispatch(`authentication`,{
         email: this.email,
         password: this.password,
-        returnSecureToken: true,
+        isLogin: true,
       })
       .then(result => {
-        console.log(result);
+        // console.log(result,'.....................');
         // this.$store.commit('SET_TOKEN',result.idToken)
-        window.localStorage.setItem('token',result.idToken)
-        console.log()
+        // window.localStorage.setItem('token',result.idToken)
+        // console.log()
       })
       .catch(e =>{
-        console.log(e)
+        // console.log(e,'.......................')
       })
     }
   }
