@@ -20,12 +20,14 @@ export default {
     await context.store.dispatch('getUpcomingFilms');
     await context.store.dispatch('getTopFilms')
   },
+  loading: false,
   data(){
     return{
     }
   },
   computed:{
-    ...mapGetters(['topFilms', 'upcomingFilms', 'popularFilms'])
+    ...mapGetters(['topFilms', 'upcomingFilms', 'popularFilms', 'currentPage']),
+    
   },
   methods:{
     ...mapActions(['getTopFilms', 'getPopularFilms', 'getUpcomingFilms', 'getDetailFilm', 'getNowPlayingFilms'])

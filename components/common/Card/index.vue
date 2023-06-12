@@ -1,7 +1,7 @@
 <template>
   <div id="filmCard">
     <div class="position-relative" v-b-hover="showCircleButton">
-      <img :src="src" alt="" />
+      <img :src="src!=null?src:require('~/assets/images/error2.jpeg')" alt=""/>
       <ButtonCircle v-show="isShowCircleButton" :currentId="id"/>
     </div>
     <p class="mt-3 mb-0 font-weight-bold text-center filmTitle" @click="goToFilm()">{{ title }}</p>

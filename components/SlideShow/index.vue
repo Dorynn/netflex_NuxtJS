@@ -18,7 +18,7 @@
             class="d-block w-100"
             width="100vw"
             height="700px"
-            :src="`https://image.tmdb.org/t/p/original${item.backdrop_path}`"
+            :src="item.backdrop_path?`https://image.tmdb.org/t/p/original${item.backdrop_path}`:null"
             alt="image slot"
             style="object-fit: cover;"
           />

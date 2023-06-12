@@ -1,5 +1,10 @@
 <template>
-  <b-modal id="modal-login" centered ok-title="LOGIN" cancel-title="CLOSE" no-close-on-backdrop>
+  <b-modal id="modal-login" 
+    centered ok-title="LOGIN" 
+    cancel-title="CLOSE" 
+    no-close-on-backdrop
+    @ok="loginAccount"
+  >
     <template #modal-header>
       <h2 class="title">Login</h2>
     </template>
@@ -11,8 +16,8 @@
         ><font-awesome-icon :icon="['fab', 'google']"
       /></span>
     </div>
-    <input type="email" placeholder="E-mail" id="email" />
-    <input type="password" placeholder="Password" id="password" />
+    <input v-model="email" type="email" placeholder="E-mail" id="email" />
+    <input v-model="password" type="password" placeholder="Password" id="password" />
 
     <div class="textGroup">
       <p class="text-orange">
@@ -27,20 +32,39 @@
       <p class="text-green font-weight-bold">Forgot Password?</p>
     </div>
   </b-modal>
-  <!-- <v-dialog>
-    <template v-slot:default="dialog">
-      <v-card>
-        
-      </v-card>
-    </template>
-  </v-dialog> -->
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   data() {
-    return {};
+    return {
+      email: "",
+      password: "",
+      temp:"",
+    };
   },
+  methods:{
+    ...mapMutations(['SET_TOKEN'])
+    ,
+    loginAccount(){
+      this.$axios.$post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbApiKey}`,{
+        email: this.email,
+        password: this.password,
+        returnSecureToken: true,
+      })
+      .then(result => {
+        console.log(result);
+        // this.$store.commit('SET_TOKEN',result.idToken)
+        window.localStorage.setItem('token',result.idToken)
+        console.log()
+      })
+      .catch(e =>{
+        console.log(e)
+      })
+    }
+  }
 };
 </script>
 

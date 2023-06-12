@@ -4,7 +4,7 @@
         <b-row>
           <b-col cols="12" lg="3" md="3" sm="12" xs="12" >
             <img
-              :src="`https://image.tmdb.org/t/p/w500/${detailFilm.poster_path}`"
+              :src="detailFilm.poster_path?`https://image.tmdb.org/t/p/w500/${detailFilm.poster_path}`:require('~/assets/images/error.jpg')"
               width="100%"
               height="auto"
               alt=""
@@ -60,7 +60,8 @@
   import MainActorList from '~/components/MainActorList'
   export default {
     async asyncData(context){
-    console.log('context: ', context)
+    // console.log('context: ', context)
+    await context.store.dispatch('getDetailFilm',context.route.params.id);
     await context.store.dispatch('getRecommendFilms', context.params.id)
     await context.store.dispatch('getActors',context.params.id);
     await context.store.dispatch('getTopFilms');
@@ -70,6 +71,7 @@
         link:"null"
       }
     },
+    loading:false,
     components: {
       ButtonDanger,
       ButtonSuccess,
@@ -87,18 +89,6 @@
     },
     methods:{
         ...mapActions(['getFilms', 'getDetailFilm', 'getActors', 'getRecommendFilms', 'getTopFilms']),
-    },
-    created(){
-        //  this.getRecommendFilms(this.$route.params.id)
-        this.getFilms();
-        this.getDetailFilm(this.$route.params.id);
-        this.link='https://image.tmdb.org/t/p/w500/'
-        console.log(this.detailFilm)
-      },
-      mounted(){
-      // this.$refs.poster.src=this.link+this.detailFilm.poster_path;
-      console.log(this.$refs.poster, this.link)
-      console.log(this.detailFilm)
     }
 
   };

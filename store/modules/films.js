@@ -20,6 +20,7 @@ const films = {
     nowPlayingFilms: (state) => state.nowPlayingFilms,
     actors: (state) => state.actors,
     recommendFilms:(state) => state.recommendFilms,
+    currentPage: state => state.currentPage,
   },
   mutations: {
     SET_FILMS(state, data) {
@@ -55,7 +56,7 @@ const films = {
   actions: {
     async getNowPlayingFilms({ commit }) {
       try {
-        const response = await this.$axios.get("/movie/now_playing");
+        const response = await this.$axios.get(`/movie/now_playing?api_key=${process.env.moviedbApiKey}`);
         commit("SET_NOW_PLAYING_FILMS", response.data.results);
         // console.log("res", response.data.results);
         console.log(response)
@@ -66,7 +67,7 @@ const films = {
 
     async getUpcomingFilms({ commit }) {
       const response = await this.$axios.get(
-        "/movie/upcoming"
+        `/movie/upcoming?api_key=${process.env.moviedbApiKey}`
       );
       commit("SET_UPCOMING_FILMS", response.data.results);
       commit("SET_FILMS", response.data.results);
@@ -74,27 +75,24 @@ const films = {
 
     async getTopFilms({ commit }) {
       const response = await this.$axios.get(
-        "/movie/top_rated"
+        `/movie/top_rated?api_key=${process.env.moviedbApiKey}`
       );
       commit("SET_TOP_FILMS", response.data.results);
       commit("SET_FILMS", response.data.results);
 
     },
 
-    async getPopularFilms({ commit }, cur) {
+    async getPopularFilms({ commit }) {
       const response = await this.$axios.get(
-        `/movie/popular?page=${cur}`
+        `/movie/popular?api_key=${process.env.moviedbApiKey}`
       );
       commit('SET_POPULAR_FILMS', response.data.results)
-      // console.log(response.data.results);
-      commit("SET_FILMS", response.data.results);
-
+      // commit('SET_CURRENT_PAGE', cur)
     },
 
     async getDetailFilm({commit}, id){
-      const response = await this.$axios.get(`/movie/${id}?append_to_response=videos`)
+      const response = await this.$axios.get(`/movie/${id}?api_key=${process.env.moviedbApiKey}&append_to_response=videos`)
       commit('SET_DETAIL_FILM', response.data);
-      // console.log('detail film',response.data)
     },
 
     async getFilms({commit, state}){
@@ -102,12 +100,12 @@ const films = {
       commit('SET_FILMS', data)
     },
     async getRecommendFilms({commit}, id){
-      const response = await this.$axios.get(`/movie/${id}/similar`)
+      const response = await this.$axios.get(`/movie/${id}/similar?api_key=${process.env.moviedbApiKey}`)
       commit('SET_RECOMMEND_FILMS', response.data.results)
-      // console.log('recommend',response.data.results)
     },
     async getActors({commit}, id){
-      const response = await this.$axios.get(`/movie/${id}/casts`)
+      const response = await this.$axios.get(`/movie/${id}/casts?api_key=${process.env.moviedbApiKey}`)
+      console.log(response)
       commit('SET_ACTORS', response.data.cast)
     }
 }

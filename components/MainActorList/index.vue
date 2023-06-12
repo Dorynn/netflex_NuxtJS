@@ -1,17 +1,25 @@
 <template>
-    <FilmList id="mainActorList" :filmtype="filmtype">
-        <div class="row actorList">
-          <div class="actorCard col-2" v-for="i in 6" :key="i">
-            <img :src="`https://image.tmdb.org/t/p/w500${actors[i-1].profile_path}`" alt="" style="object-fit: cover;"/>
-            <p class="m-0 text-center"> {{actors[i-1].original_name}}</p>
-            <strong>{{actors[i-1].character}}</strong>
+    <FilmList id="mainActorList" :filmtype="filmtype" v-if="actors.length>0">
+        <div class="row actorList" v-if="actors.length > 6">
+          <div class="actorCard col-2"  v-for="item in actors.slice(0,6)" :key="item.id" >
+            <img :src="item!=null?`https://image.tmdb.org/t/p/w500${item.profile_path}`:require('~/assets/images/error.jpg')" alt="" style="object-fit: cover;"/>
+            <p class="m-0 text-center"> {{item?item.original_name:""}}</p>
+            <strong>{{item.character}}</strong>
           </div>
         </div>
+        <div class="row actorList" v-else>
+          <div class="actorCard col-2"  v-for="item in actors" :key="item.id" >
+            <img :src="item.profile_path!=null?`https://image.tmdb.org/t/p/w500${item.profile_path}`:require('~/assets/images/error.jpg')" alt="" style="object-fit: cover;"/>
+            <p class="m-0 text-center"> {{item?item.original_name:""}}</p>
+            <strong>{{item.character}}</strong>
+          </div>
+        </div>
+
     </FilmList>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import FilmList from '~/components/FilmList';
 export default {
     props:{

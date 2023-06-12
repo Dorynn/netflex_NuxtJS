@@ -80,9 +80,12 @@
             @click="onUserMenu"
             v-click-outside="onClickOutSideUser"
           >
-            <v-avatar size="28px">
-              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+            <v-avatar size="28px" v-if="token">
+              <img :src="require('~/assets/images/avatar1.jpg')" alt="John" />
             </v-avatar>
+            <v-btn icon v-else>
+              <v-icon>registered-trademark</v-icon>
+            </v-btn>
           </div>
 
           <v-card
@@ -97,7 +100,9 @@
                     :icon="['fas', 'right-to-bracket']"
                     class="mr-3"
                   />
-                  <v-list-item-content>Login</v-list-item-content>
+                  <v-list-item-content v-if="token">Profile</v-list-item-content>
+                  <v-list-item-content v-else>Login</v-list-item-content>
+
                 </v-list-item>
                 <v-list-item class="menuItem" v-b-modal.modal-sign-up>
                   <font-awesome-icon
@@ -105,6 +110,7 @@
                     class="mr-3"
                   />
                   <v-list-item-content>Sign Up</v-list-item-content>
+                  <!-- <v-list-item-content>Log out</v-list-item-content> -->
                 </v-list-item>
               </v-list-item-group>
             </v-list>
@@ -134,6 +140,7 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
 import LoginModal from "~/components/common/Modal/LoginModal";
 import SignUpModal from "~/components/common/Modal/SignUpModal";
 export default {
@@ -149,10 +156,30 @@ export default {
       keyword: "",
     };
   },
+  computed:{
+    token(){
+      return window.localStorage.getItem('token')
+    }
+  },
   watch: {
     keyword() {
       console.log(this.keyword);
     },
+  },
+  created(){
+    // this.$axios.$post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbApiKey}`,{
+    //     email: 'dl@hihi.com',
+    //     password: '12345678',
+    //     returnSecureToken: true,
+    //   })
+    //   .then(result => {
+    //     console.log(result);
+    //     this.$store.commit('SET_TOKEN',result.idToken)
+    //   })
+    //   .catch(e =>{
+    //     console.log(e)
+    //   })
+    console.log(this.token)
   },
   methods: {
     onSearch() {
@@ -182,7 +209,9 @@ export default {
     goToSearch(){
       console.log('searchhhh')
       this.isClickSearch = false;
-      this.$router.push(`/search?query=${this.keyword}`)
+      this.$router.push({path:'/search', query:{query: this.keyword}});
+      this.keyword="";
+
     }
   },
   updated() {

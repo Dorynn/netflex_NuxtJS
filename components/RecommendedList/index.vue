@@ -3,7 +3,7 @@
     <h3>Recommended</h3>
     <div class="film mb-3" style="min-height: 50px; display: flex; width: 40px" v-for="item in recommendFilms.slice(0,10)" :key="item.id">
       <img
-        :src="`https://image.tmdb.org/t/p/w500${item.poster_path}`"
+        :src="item.poster_path?`https://image.tmdb.org/t/p/w500${item.poster_path}`:require('~/assets/images/error.jpg')"
         alt=""
         width="100%"
         style="object-fit: cover;"

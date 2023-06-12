@@ -61,9 +61,9 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: 'https://api.themoviedb.org/3/',
     headers: {
-      common: {
-        Authorization: `Bearer ${token}`
-      }
+      // common: {
+      //   Authorization: `Bearer ${token}`
+      // }
     }
   },
 
@@ -92,4 +92,8 @@ export default {
     port: 8000
   },
   ssr: false,
+  env:{
+    fbApiKey:'AIzaSyCQfCSE6RRhykUOTcq-vveIVIfoxaqvFHQ',
+    moviedbApiKey:'aa21e40a3267a24745d5c80bff5f79b8',
+  }
 }

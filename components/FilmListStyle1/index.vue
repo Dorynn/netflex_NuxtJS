@@ -11,7 +11,7 @@
         <Card
           :id="film.id"
           :title="film.title"
-          :src="`https://image.tmdb.org/t/p/w500${film.backdrop_path}`"
+          :src="film.backdrop_path?`https://image.tmdb.org/t/p/w500${film.backdrop_path}`:null"
         />
       </swiper-slide>
     </swiper>

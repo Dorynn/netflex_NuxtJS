@@ -13,7 +13,7 @@
       >
         <Card
           :id="film.id"
-          :src="`https://image.tmdb.org/t/p/w500${film.backdrop_path}`"
+          :src="film.backdrop_path?`https://image.tmdb.org/t/p/w500${film.backdrop_path}`:null"
           :title="film.title"
         />
       </b-col>
@@ -40,12 +40,12 @@ export default {
       curP:1,
       perPage: 20,
       rows:600,
-      movies:null,
+      movies:[],
     };
   },
   async fetch(){
     // await context.store.dispatch('getPopularFilms')
-    await this.$axios.$get(`https://api.themoviedb.org/3/movie/popular?api_key=e9e9d8da18ae29fc430845952232787c&language=en-US&page=${this.curP}`).then((response)=>{
+    await this.$axios.$get(`/movie/popular?api_key=${process.env.moviedbApiKey}&page=${this.curP}`).then((response)=>{
       this.movies = response.results
       console.log(response, this.movies)
     })
@@ -57,8 +57,9 @@ export default {
   },
   watch:{
     curP(){
+      this.SET_CURRENT_PAGE(this.curP)
       console.log('curwatch',this.curP, this.currentPage)
-      this.$store.commit('SET_CURRENT_PAGE', this.curP);
+      // this.$store.commit('SET_CURRENT_PAGE', this.curP);
       this.$fetch();
     }
   },
@@ -67,7 +68,7 @@ export default {
     FilmList
   },
   computed: {
-    ...mapGetters(["popularFilms"]),
+    ...mapGetters(["popularFilms", 'currentPage']),
     ...mapState(['currentPage'])
   },
   methods:{

@@ -1,12 +1,19 @@
 <template>
-    <b-modal id="modal-sign-up" ref="target" centered ok-title="SIGN UP" cancel-title="CLOSE" no-close-on-backdrop>
+    <b-modal id="modal-sign-up" 
+      ref="target" 
+      centered ok-title="SIGN UP" 
+      cancel-title="CLOSE" 
+      no-close-on-backdrop
+      @ok="registerAccount"
+      :ok-disabled="disableButton"
+    >
       <template #modal-header>
         <h2 class="title">
           Sign Up
         </h2>
       </template>
-      <input type="email" placeholder="E-mail" id="email" />
-      <input type="password" placeholder="Password" id="password" />
+      <input v-model="email" type="email" placeholder="E-mail" id="email" required />
+      <input v-model="password" type="password" placeholder="Password" id="password" minlength="8"/>
   
       <div class="textGroup">
         <p class="text-orange">Already have an account? <span class="text-green font-weight-bold" v-b-modal.modal-login
@@ -18,11 +25,39 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      email:"",
+      password:"",
+      // disableButton:false,
+    };
+  },
+  computed:{
+    disableButton(){
+      return this.password.length<8
+    }
   },
   methods:{
     preventClose(){
       console.log('.............')
+    },
+    resetData(){
+      this.email="";
+      this.password="";
+    },
+    registerAccount(){
+      this.$axios.$post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.fbApiKey}`,{
+        email: this.email,
+        password: this.password,
+        returnSecureToken: true,
+      })
+      .then(result =>{
+        console.log(result)
+        // window.localStorage.setItem('')
+        this.resetData();
+      })
+      .catch(e =>{
+        console.log(e)
+      })
     }
   }
 };
