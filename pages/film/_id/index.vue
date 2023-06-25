@@ -26,7 +26,7 @@
             <b-form-rating
               id="rating-inline"
               inline
-              :value="detailFilm.vote_average"
+              :value="detailFilm.vote_average?detailFilm.vote_average:0"
               stars="10"
               size="lg"
               readonly
