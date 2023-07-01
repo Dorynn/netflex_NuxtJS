@@ -45,7 +45,11 @@ body{
 }
 
 .text-green{
-    color: #4caf50;
+    color: #4caf50 !important;
+}
+
+.text-white{
+    color: #ffffff ;
 }
 
 .filmTitle {

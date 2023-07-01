@@ -14,7 +14,7 @@
         <b-form-rating
           id="rating-inline"
           inline
-          :value="item.vote_average"
+          :value="item.vote_average?item.vote_average:0"
           stars="10"
           readonly
         ></b-form-rating>

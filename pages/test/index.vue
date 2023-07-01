@@ -75,8 +75,9 @@
         />
       </swiper-slide>
     </swiper>
+    <ForgotPassword/>
 
-    <FilmList :filmtype="'Top Film'">
+    <!-- <FilmList :filmtype="'Top Film'">
       <swiper
         :slides-per-view="4"
         :space-between="30"
@@ -93,8 +94,7 @@
           />
         </swiper-slide>
       </swiper>
-    </FilmList>
-
+    </FilmList> -->
   </div>
 </template>
 
@@ -103,6 +103,7 @@ import Card from "~/components/common/Card";
 import FilmList from "~/components/FilmList";
 import { Navigation, Pagination } from "swiper";
 import { SwiperCore, Swiper, SwiperSlide } from "swiper-vue2";
+import ForgotPassword from "~/components/common/Modal/ForgotPassword"
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
 import { mapActions, mapGetters } from "vuex";
@@ -113,13 +114,13 @@ export default {
     Swiper,
     SwiperSlide,
     Card,
-    FilmList
+    FilmList,
+    ForgotPassword
   },
   data(){
     return{
       breakPoints: {
         1024: { slidesPerView: 4, spaceBetween: 30 },
-
         320: {
           slidesPerView: 2,
           spaceBetween: 30,

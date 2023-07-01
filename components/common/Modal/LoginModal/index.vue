@@ -20,22 +20,24 @@
     <input v-model="password" type="password" placeholder="Password" id="password" />
 
     <div class="textGroup">
-      <p class="text-orange">
+      <p class="text-white">
         You don't have an account?
         <span
-          class="text-green font-weight-bold"
+          class="text-green font-weight-bold "
           v-b-modal.modal-sign-up
           @click="$bvModal.hide('modal-login')"
           >Sign Up</span
         >
       </p>
       <p class="text-green font-weight-bold">Forgot Password?</p>
+      <ForgotPassword/>
     </div>
   </b-modal>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
+import ForgotPassword from "~/components/common/Modal/ForgotPassword"
 
 export default {
   data() {
@@ -44,6 +46,9 @@ export default {
       password: "",
       temp:"",
     };
+  },
+  components:{
+    ForgotPassword,
   },
   methods:{
     ...mapMutations(['SET_TOKEN'])

@@ -6,34 +6,66 @@
       no-close-on-backdrop
       @ok="registerAccount"
       :ok-disabled="disableButton"
+      @show="openModal"
     >
       <template #modal-header>
         <h2 class="title">
           Sign Up
         </h2>
       </template>
-      <input v-model="email" type="email" placeholder="E-mail" id="email" required />
-      <input v-model="password" type="password" placeholder="Password" id="password" minlength="8"/>
-  
+      <input v-model="$v.email.$model" type="email" placeholder="E-mail" id="email" @blur="checkEmailBlur" @input="onTyping"/>
+      <small class="text-orange" v-if="!$v.email.required&&$v.email.$error">Không được để trống</small>
+      <small class='text-orange' v-if="isTrueFormat">Không đúng định dạng</small>
+      <small class='text-orange' v-if="isExist">Email đã tồn tại</small>
+
+      <input v-model="$v.password.$model" type="password" placeholder="Password" id="password" minlength="8" @blur="checkPasswordBlur" @input="onTyping"/>
+      <small class='text-orange' v-if="!$v.password.required&&$v.password.$error">Không được để trống</small>
+      <small class='text-orange' v-if="isTrueFormatPassword">Độ dài tối thiểu là 8, ít nhất 1 kí tự đặc biệt, 1 chữ cái viết hoa và 1 kí tự số</small>
       <div class="textGroup">
-        <p class="text-orange">Already have an account? <span class="text-green font-weight-bold" v-b-modal.modal-login
+        <p class="text-white">Already have an account? <span class="text-green font-weight-bold" v-b-modal.modal-login
             @click="$bvModal.hide('modal-sign-up')">Login</span></p>
       </div>
     </b-modal>
 
 </template>
 <script>
+import {
+  required,
+  minLength,
+  helpers,
+} from "vuelidate/lib/validators";
+const format = helpers.regex(
+  "format",
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+);
+const formatEmail = helpers.regex("formatEmail",/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
 export default {
   data() {
     return {
       email:"",
       password:"",
+      isTrueFormat:false,
+      isTrueFormatPassword:false,
+      disableButton:true,
+      isExist: false,
     };
   },
-  computed:{
-    disableButton(){
-      return this.password.length<8
+  validations:{
+    email: {
+      required,
+      formatEmail,
+    },
+    password:{
+      required,
+      minLength: minLength(8),
+      format,
     }
+  },
+  computed:{
+
+  },
+  create(){
+    console.log(this)
   },
   methods:{
     preventClose(){
@@ -43,12 +75,47 @@ export default {
       this.email="";
       this.password="";
     },
-    registerAccount(){
-      this.$store.dispatch(`authentication`,{
+    async registerAccount(event){
+
+      event.preventDefault();
+      await this.$store.dispatch(`authentication`,{
         email: this.email,
         password: this.password,
         isLogin: false,
+      }).catch(e=>{
+        console.log(e)
+        if (e.data.error.message == 'EMAIL_EXISTS'){
+          this.isExist = true;
+        }
       })
+
+      if(!this.isExist){
+        console.log(123456789)
+        this.$nextTick(() => {
+          this.$bvModal.hide('modal-sign-up');
+        })
+      }
+    },
+    checkEmailBlur(){
+      this.$v.$touch();
+      this.isTrueFormat = !this.$v.email.formatEmail;
+      this.disableButton = this.$v.$anyError;
+    },
+    checkPasswordBlur(){
+      this.$v.$touch();
+      this.disableButton = this.$v.$anyError;
+      this.isTrueFormatPassword = !this.$v.password.minLength || !this.$v.password.format; 
+    },
+    openModal(){
+      this.$v.$reset();
+      this.email = "";
+      this.password = "";
+      this.disableButton = true;
+    },
+    onTyping(){
+      this.isTrueFormat = false;
+      this.isTrueFormatPassword = false;
+      this.isExist = false;
     }
   }
 };
@@ -120,9 +187,15 @@ export default {
     .btn.btn-primary {
       color: #4caf50;
 
+      // &:hover {
+      //   background-color: var(--bg-hover-login);
+      // }
+    }
+    
+  }
+  .hover {
       &:hover {
         background-color: var(--bg-hover-login);
       }
-    }
   }
 }</style>
