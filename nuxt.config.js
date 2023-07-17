@@ -51,6 +51,31 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     '@nuxtjs/vuetify',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: "AIzaSyCQfCSE6RRhykUOTcq-vveIVIfoxaqvFHQ",
+          authDomain: "netflex-nuxt.firebaseapp.com",
+          databaseURL: "https://netflex-nuxt-default-rtdb.firebaseio.com",
+          projectId: "netflex-nuxt",
+          storageBucket: "netflex-nuxt.appspot.com",
+          messagingSenderId: "561281572247",
+          appId: "1:561281572247:web:7260fb72b7c4a23066f8d2",
+          measurementId: "G-Q6W75PNR2W"
+        },
+        services: {
+          auth: {
+            persistence: 'local',
+            initialize: {
+              onAuthStateChangeAction: 'onAuthStateChangedAction',
+              subscribeManually: false,
+            },
+            ssr: false
+          }
+        }
+      }
+    ],
   ],
 
   vuetify:{

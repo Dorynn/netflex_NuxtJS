@@ -10,6 +10,7 @@ const films = {
     recommendFilms:[],
     actors:[],
     currentPage:1,
+    user: null,
   },
   getters: {
     upcomingFilms: (state) => state.upcomingFilms,
@@ -21,6 +22,7 @@ const films = {
     actors: (state) => state.actors,
     recommendFilms:(state) => state.recommendFilms,
     currentPage: (state) => state.currentPage,
+    getUser: (state) => state.user,
   },
   mutations: {
     SET_FILMS(state, data) {
@@ -52,6 +54,9 @@ const films = {
     SET_CURRENT_PAGE(state, data){
       window.localStorage.setItem('currentPage',data);
       state.currentPage = data;
+    },
+    SET_USER(state, user){
+      state.user = user
     }
   },
   actions: {
@@ -108,6 +113,20 @@ const films = {
       const response = await this.$axios.get(`/movie/${id}/casts?api_key=${process.env.moviedbApiKey}`)
       // console.log(response)
       commit('SET_ACTORS', response.data.cast)
+    },
+    async onAuthStateChangeAction(state, { authUser, claims}){
+      if (!authUser){
+        state.commit('SET_USER', null)
+        this.$router.push({
+          path: '/',
+        })
+      }else{
+        const {uid, email} = authUser
+        state.commit('SET_USER', {
+          uid, 
+          email,
+        })
+      }
     }
 }
 }

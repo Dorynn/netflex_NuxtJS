@@ -11,11 +11,12 @@
   "dependencies": {
     "@nuxt/content": "^1.0.0",
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/firebase": "^8.2.2",
     "@nuxtjs/pwa": "^3.3.5",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.25.3",
-    "firebase": "8",
+    "firebase": "^9.23.0",
     "nuxt": "^2.15.8",
     "swiper": "6.8.4",
     "swiper-vue2": "^1.0.10",

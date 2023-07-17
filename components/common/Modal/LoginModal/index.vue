@@ -1,4 +1,5 @@
 <template>
+<div>
   <b-modal id="modal-login" 
     centered ok-title="LOGIN" 
     cancel-title="CLOSE" 
@@ -29,10 +30,12 @@
           >Sign Up</span
         >
       </p>
-      <p class="text-green font-weight-bold">Forgot Password?</p>
-      <ForgotPassword/>
+      <p class="text-green font-weight-bold" v-b-modal.modal-forgotpass @click="$bvModal.hide('modal-login')">Forgot Password?</p>
     </div>
   </b-modal>
+  <ForgotPassword/>
+
+</div>
 </template>
 
 <script>
